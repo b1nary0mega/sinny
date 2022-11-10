@@ -7,5 +7,5 @@ _Basic notes for HTB_
 # nmap
 
 ```
-nmap -sS -sC -sv -Pn <IP> -oA scanName
+nmap -sS -sC -v -Pn <IP> -oA scanName
 ```
