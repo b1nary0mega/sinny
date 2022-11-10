@@ -1,1 +1,11 @@
-# This will be where we keep basic notes for HTB
+_Basic notes for HTB_
+
+# Links
+
+- [Explain Shell](https://explainshell.com/)
+
+# nmap
+
+```
+nmap -sS -sC -sv -Pn <IP> -oA scanName
+```
