@@ -7,7 +7,11 @@ Current IP: 10.129.173.59
 ```
 PORT    STATE SERVICE REASON
 873/tcp open  rsync   syn-ack ttl 63
+```
 
+Find available shares:
+
+```
 sudo nc -vn 10.129.173.59 873
 10.129.173.59 873 (rsync) open
 @RSYNCD: 31.0
