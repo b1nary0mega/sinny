@@ -4,9 +4,8 @@ Keywords: #python #docker #weak-pwd
 ## Details
 
 _Current IP:_ 10.129.15.202
-_Host Name:_ goodgames.htb
 
-_added above to /etc/hosts_
+_Host Name:_ goodgames.htb  (added to /etc/hosts)
 
 ### nmaps
 
