@@ -53,3 +53,35 @@ JavaScript libraries:
 - jQuery 3.3.1
 - Moment.js 2.22.1
 ```
+
+### gobusting
+
+```
+$ gobuster dir -w /usr/share/seclists/Discovery/Web-Content/common.txt -u http://goodgames.htb -s '200,204,301,302,307,403,500' -b '' --exclude-length 9265 -e | tee gobuster-common.txt
+===============================================================
+Gobuster v3.3
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:              http://goodgames.htb
+[+] Method:           GET
+[+] Threads:          10
+[+] Wordlist:         /usr/share/seclists/Discovery/Web-Content/common.txt
+[+] Status codes:     302,307,403,500,200,204,301
+[+] Exclude Length:   9265
+[+] User Agent:       gobuster/3.3
+[+] Expanded:         true
+[+] Timeout:          10s
+===============================================================
+2022/11/16 14:19:03 Starting gobuster in directory enumeration mode
+===============================================================
+http://goodgames.htb/blog                 (Status: 200) [Size: 44212]
+http://goodgames.htb/forgot-password      (Status: 200) [Size: 32744]
+http://goodgames.htb/login                (Status: 200) [Size: 9294]
+http://goodgames.htb/logout               (Status: 302) [Size: 208] [--> http://goodgames.htb/]
+http://goodgames.htb/profile              (Status: 200) [Size: 9267]
+http://goodgames.htb/server-status        (Status: 403) [Size: 278]
+http://goodgames.htb/signup               (Status: 200) [Size: 33387]
+Progress: 4713 / 4714 (99.98%)===============================================================
+2022/11/16 14:20:03 Finished
+===============================================================
+```
