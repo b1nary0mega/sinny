@@ -81,7 +81,7 @@ http://goodgames.htb/logout               (Status: 302) [Size: 208] [--> http://
 http://goodgames.htb/profile              (Status: 200) [Size: 9267]
 http://goodgames.htb/server-status        (Status: 403) [Size: 278]
 http://goodgames.htb/signup               (Status: 200) [Size: 33387]
-Progress: 4713 / 4714 (99.98%)===============================================================
+===============================================================
 2022/11/16 14:20:03 Finished
 ===============================================================
 ```
