@@ -84,4 +84,54 @@ http://goodgames.htb/signup               (Status: 200) [Size: 33387]
 ===============================================================
 2022/11/16 14:20:03 Finished
 ===============================================================
+
+$ gobuster dir -w /usr/share/seclists/Discovery/Web-Content/CGIs.txt -u http://goodgames.htb -s '200,204,301,307,403,500' -b '' --exclude-length 9265 --exclude-length 85107 -e | tee gobuster-cgis.txt                                                                                                                 
+===============================================================
+Gobuster v3.3
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:              http://goodgames.htb
+[+] Method:           GET
+[+] Threads:          10
+[+] Wordlist:         /usr/share/seclists/Discovery/Web-Content/CGIs.txt
+[+] Status codes:     301,307,403,500,200,204
+[+] Exclude Length:   9265,85107
+[+] User Agent:       gobuster/3.3
+[+] Expanded:         true
+[+] Timeout:          10s
+===============================================================
+2022/11/16 14:31:07 Starting gobuster in directory enumeration mode
+===============================================================
+Progress: 168 / 3389 (4.96%)[ERROR] 2022/11/16 14:31:10 [!] parse "http://goodgames.htb/%NETHOOD%/": invalid URL escape "%NE"
+Progress: 446 / 3389 (13.16%)[ERROR] 2022/11/16 14:31:13 [!] parse "http://goodgames.htb/%a%s%p%d": invalid URL escape "%a%"
+Progress: 489 / 3389 (14.43%)[ERROR] 2022/11/16 14:31:14 [!] parse "http://goodgames.htb/default.htm%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%": invalid URL escape "%"
+http://goodgames.htb/server-status        (Status: 403) [Size: 278]
+===============================================================
+2022/11/16 14:31:50 Finished
+===============================================================
+
+$ gobuster dir -w /usr/share/seclists/Discovery/Web-Content/directory-list-lowercase-2.3-medium.txt -u http://goodgames.htb -s '200,204,301,302,307,403,500' -b '' --exclude-length 9265 -e -x py,js,txt | tee gobuster-dirlist_med.txt 
+===============================================================
+Gobuster v3.3
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:              http://goodgames.htb
+[+] Method:           GET
+[+] Threads:          10
+[+] Wordlist:         /usr/share/seclists/Discovery/Web-Content/directory-list-lowercase-2.3-medium.txt
+[+] Status codes:     403,500,200,204,301,302,307
+[+] Exclude Length:   9265
+[+] User Agent:       gobuster/3.3
+[+] Extensions:       js,txt,py
+[+] Expanded:         true
+[+] Timeout:          10s
+===============================================================
+2022/11/16 14:49:04 Starting gobuster in directory enumeration mode
+===============================================================
+http://goodgames.htb/blog                 (Status: 200) [Size: 44212]
+http://goodgames.htb/login                (Status: 200) [Size: 9294]
+http://goodgames.htb/profile              (Status: 200) [Size: 9267]
+http://goodgames.htb/signup               (Status: 200) [Size: 33387]
+http://goodgames.htb/logout               (Status: 302) [Size: 208] [--> http://goodgames.htb/]
+Progress: 19750 / 830576 (2.37%)
 ```
