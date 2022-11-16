@@ -42,7 +42,7 @@ Nmap done: 1 IP address (1 host up) scanned in 9.04 seconds
 ```
 ### Versions
 
-- [Apache httpd 2.4.51](https://packages.ubuntu.com/search?suite=default&section=all&arch=any&keywords=apache2&searchon=names) - Impish prior?
+- [Apache httpd 2.4.51](https://packages.ubuntu.com/search?suite=default&section=all&arch=any&keywords=apache2&searchon=names) - Impish (21.10) or prior?
 - JavaScript frameworks - GSAP 1.20.3
 - Web frameworks - Flask 2.0.2
 - Web servers - Flask 2.0.2
