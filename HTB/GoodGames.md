@@ -45,3 +45,42 @@ Nmap done: 1 IP address (1 host up) scanned in 9.04 seconds
 ```
 Apache httpd 2.4.51
 ```
+
+### Wappalyzer
+
+Photo galleries
+- PhotoSwipe
+
+JavaScript frameworks
+- GSAP 1.20.3
+
+Video players
+- YouTube
+- Twitch Player
+
+Font scripts
+- Font Awesome
+- Ionicons
+- Google Font API
+
+Web frameworks
+- Flask 2.0.2
+
+Miscellaneous
+- Popper
+
+Web servers
+- Flask 2.0.2
+Programming languages
+- Python 3.9.2
+
+JavaScript libraries
+- Hammer.js 2.0.7
+- jQuery 3.3.1
+- Moment.js 2.22.1
+- Flickity
+- PhotoSwipe
+- SoundManager
+
+UI frameworks
+- Bootstrap
