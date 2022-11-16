@@ -42,17 +42,15 @@ Nmap done: 1 IP address (1 host up) scanned in 9.04 seconds
 ```
 ### Versions
 
-```
-Apache httpd 2.4.51
-JavaScript frameworks - GSAP 1.20.3
-Web frameworks - Flask 2.0.2
-Web servers - Flask 2.0.2
-Programming languages - Python 3.9.2
-JavaScript libraries:
-- Hammer.js 2.0.7
-- jQuery 3.3.1
-- Moment.js 2.22.1
-```
+- [Apache httpd 2.4.51](https://packages.ubuntu.com/search?suite=default&section=all&arch=any&keywords=apache2&searchon=names)
+- JavaScript frameworks - GSAP 1.20.3
+- Web frameworks - Flask 2.0.2
+- Web servers - Flask 2.0.2
+- Programming languages - Python 3.9.2
+- JavaScript libraries:
+  - Hammer.js 2.0.7
+  - jQuery 3.3.1
+  - Moment.js 2.22.1
 
 ### gobusting
 
