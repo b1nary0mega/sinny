@@ -286,3 +286,73 @@ WLD      GET         -         -         - Wildcard response is static; auto-fil
 200      GET      267l      553w     9294c http://goodgames.htb/password-reset
 
 ```
+
+### gobuster
+```
+[ 12:49PM ]  [ ops@redteam:~/Documents/PT/HTB-goodgames/data ]                                                                                                                       
+ $ ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-medium-words-lowercase.txt -u http://10.10.11.130/FUZZ -fs 9265 -c -v | tee ffuf-raft_med_low.txt                          
+                                                                                                                                                                                     
+        /'___\  /'___\           /'___\                                                                                                                                              
+       /\ \__/ /\ \__/  __  __  /\ \__/                                                                                                                                              
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\                                                                                                                                             
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/                                                                                                                                             
+         \ \_\   \ \_\  \ \____/  \ \_\                                                                                                                                              
+          \/_/    \/_/   \/___/    \/_/                                                                                                                                              
+                                                                                                                                                                                     
+       v1.5.0 Kali Exclusive <3                                                                                                                                                      
+________________________________________________                                                                                                                                     
+
+ :: Method           : GET
+ :: URL              : http://10.10.11.130/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/raft-medium-words-lowercase.txt
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405,500
+ :: Filter           : Response size: 9265
+________________________________________________
+
+[Status: 302, Size: 208, Words: 21, Lines: 4, Duration: 91ms]
+| URL | http://10.10.11.130/logout
+| --> | http://10.10.11.130/
+    * FUZZ: logout
+
+[Status: 200, Size: 44212, Words: 15590, Lines: 909, Duration: 54ms]
+| URL | http://10.10.11.130/blog
+    * FUZZ: blog
+
+[Status: 200, Size: 9294, Words: 2101, Lines: 267, Duration: 87ms]
+| URL | http://10.10.11.130/login
+    * FUZZ: login
+
+[Status: 200, Size: 9267, Words: 2093, Lines: 267, Duration: 453ms]
+| URL | http://10.10.11.130/profile
+    * FUZZ: profile
+
+[Status: 200, Size: 33387, Words: 11042, Lines: 728, Duration: 113ms]
+| URL | http://10.10.11.130/signup
+    * FUZZ: signup
+
+[Status: 200, Size: 85107, Words: 29274, Lines: 1735, Duration: 114ms]
+| URL | http://10.10.11.130/.
+    * FUZZ: .
+
+[Status: 200, Size: 32744, Words: 10608, Lines: 730, Duration: 60ms]
+| URL | http://10.10.11.130/forgot-password
+    * FUZZ: forgot-password
+
+[Status: 403, Size: 277, Words: 20, Lines: 10, Duration: 37ms]
+| URL | http://10.10.11.130/server-status
+    * FUZZ: server-status
+
+[Status: 200, Size: 10524, Words: 2489, Lines: 287, Duration: 133ms]
+| URL | http://10.10.11.130/coming-soon
+    * FUZZ: coming-soon
+
+[Status: 200, Size: 9294, Words: 2101, Lines: 267, Duration: 121ms]
+| URL | http://10.10.11.130/password-reset
+    * FUZZ: password-reset
+
+:: Progress: [56293/56293] :: Job [1/1] :: 179 req/sec :: Duration: [0:03:33] :: Errors: 0 ::
+```
