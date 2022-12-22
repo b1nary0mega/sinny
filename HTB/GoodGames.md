@@ -4,6 +4,7 @@ Keywords: #python #docker #weak-pwd
 ## Notes
 
 _Current IP:_ 10.10.11.130
+
 _Host Name:_ goodgames.htb  (added to /etc/hosts)
 
 ## To-Do
@@ -11,6 +12,13 @@ _Host Name:_ goodgames.htb  (added to /etc/hosts)
 [ ] Check for input validation at [signup](http://goodgames.htb/signup)
 - there are two different forms, one for registration (has 4 input fields) and one for logging in (has 2 input fields).
 - once logged in, there is another 2 input fields for changing account password
+
+[ ] Check for input validation at [login](http://goodgames.htb/login)
+- --data "email=*&password=*"  
+```
+[12:22:12] [INFO] (custom) POST parameter '#1*' appears to be 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)' injectable 
+it looks like the back-end DBMS is 'MySQL'.
+```
 
 [ ] Check for input validation at [coming-soon](http://goodgames.htb/coming-soon)
 - there is a single input field for email
