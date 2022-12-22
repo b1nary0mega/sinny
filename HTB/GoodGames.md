@@ -14,7 +14,7 @@ _Host Name:_ goodgames.htb  (added to /etc/hosts)
 - once logged in, there is another 2 input fields for changing account password
 
 [ ] Check for input validation at [login](http://goodgames.htb/login)
-- --data "email=*&password=*"  
+- --data "email=\*&password=\*"  
 ```
 [12:22:12] [INFO] (custom) POST parameter '#1*' appears to be 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)' injectable 
 it looks like the back-end DBMS is 'MySQL'.
