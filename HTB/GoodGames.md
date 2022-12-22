@@ -380,3 +380,51 @@ During manual browsing with burp, entered details into [registration form](http:
 
 Upon attempting to resend the same data, it was noted that **Account already exists!**
 
+### Input Validation
+#### sqlmap
+
+**forgot-password**
+
+```
+[ 12:17PM ]  [ ops@redteam:~/Documents/PT/HTB-goodgames/data ]
+ $ sqlmap -u "http://goodgames.htb/forgot-password" --data "Email=*"        
+        ___
+       __H__
+ ___ ___[.]_____ ___ ___  {1.6.12#stable}
+|_ -| . [,]     | .'| . |
+|___|_  [)]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 12:18:23 /2022-12-22/
+
+custom injection marker ('*') found in POST body. Do you want to process it? [Y/n/q] Y
+[12:18:28] [INFO] testing connection to the target URL
+[12:18:28] [INFO] testing if the target URL content is stable
+[12:18:28] [INFO] target URL content is stable
+[12:18:28] [INFO] testing if (custom) POST parameter '#1*' is dynamic
+[12:18:29] [WARNING] (custom) POST parameter '#1*' does not appear to be dynamic
+[12:18:29] [WARNING] heuristic (basic) test shows that (custom) POST parameter '#1*' might not be injectable
+[12:18:29] [INFO] testing for SQL injection on (custom) POST parameter '#1*'
+[12:18:29] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[12:18:29] [INFO] testing 'Boolean-based blind - Parameter replace (original value)'
+[12:18:29] [INFO] testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)'
+[12:18:29] [INFO] testing 'PostgreSQL AND error-based - WHERE or HAVING clause'
+[12:18:30] [INFO] testing 'Microsoft SQL Server/Sybase AND error-based - WHERE or HAVING clause (IN)'
+[12:18:30] [INFO] testing 'Oracle AND error-based - WHERE or HAVING clause (XMLType)'
+[12:18:30] [INFO] testing 'Generic inline queries'
+[12:18:30] [INFO] testing 'PostgreSQL > 8.1 stacked queries (comment)'
+[12:18:31] [INFO] testing 'Microsoft SQL Server/Sybase stacked queries (comment)'
+[12:18:31] [INFO] testing 'Oracle stacked queries (DBMS_PIPE.RECEIVE_MESSAGE - comment)'
+[12:18:31] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)'
+[12:18:32] [INFO] testing 'PostgreSQL > 8.1 AND time-based blind'
+[12:18:32] [INFO] testing 'Microsoft SQL Server/Sybase time-based blind (IF)'
+[12:18:32] [INFO] testing 'Oracle AND time-based blind'
+it is recommended to perform only basic UNION tests if there is not at least one other (potential) technique found. Do you want to reduce the number of requests? [Y/n] n
+[12:18:38] [INFO] testing 'Generic UNION query (NULL) - 1 to 10 columns'
+[12:18:42] [WARNING] (custom) POST parameter '#1*' does not seem to be injectable
+[12:18:42] [CRITICAL] all tested parameters do not appear to be injectable. Try to increase values for '--level'/'--risk' options if you wish to perform more tests. If you suspect that there is some kind of protection mechanism involved (e.g. WAF) maybe you could try to use option '--tamper' (e.g. '--tamper=space2comment') and/or switch '--random-agent'
+
+[*] ending @ 12:18:42 /2022-12-22/
+```
