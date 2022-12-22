@@ -433,7 +433,8 @@ During manual browsing with burp, entered details into [registration form](http:
 Upon attempting to resend the same data, it was noted that **Account already exists!**
 
 ### Input Validation
-#### sqlmap
+
+#### **sqlmap**
 
 **forgot-password**
 
@@ -590,7 +591,7 @@ hat there is some kind of protection mechanism involved (e.g. WAF) maybe you cou
 
 ```
 
-**login**
+💉 **login** 💉
 
 ```
 [ 12:23PM ]  [ ops@redteam:~/Documents/PT/HTB-goodgames/data ]                                                                                                                      
