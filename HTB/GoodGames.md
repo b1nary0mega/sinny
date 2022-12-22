@@ -3,9 +3,16 @@ Keywords: #python #docker #weak-pwd
 
 ## Details
 
-_Current IP:_ 10.129.15.202
-
+_Current IP:_ 10.10.11.130
 _Host Name:_ goodgames.htb  (added to /etc/hosts)
+
+## To-Do
+[ ] Check for input validation at [signup](http://goodgames.htb/signup)
+- there are two different forms, one for registration (has 4 input fields) and one for logging in (has 2 input fields).
+- once logged in, there is another 2 input fields for changing account password
+
+[ ] Check for input validation at [coming-soon](http://goodgames.htb/coming-soon)
+- there is a single input field for email
 
 ### nmaps
 
@@ -356,3 +363,14 @@ ________________________________________________
 
 :: Progress: [56293/56293] :: Job [1/1] :: 179 req/sec :: Duration: [0:03:33] :: Errors: 0 ::
 ```
+
+### Registration
+
+During manual browsing with burp, entered details into [registration form](http://10.10.11.130/signup)
+
+**email**: register@form.com
+**first**: Register
+**pwd**: Password123!
+
+Upon attempting to resend the same data, it was noted that **Account already exists!**
+
