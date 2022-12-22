@@ -35,9 +35,7 @@ _current DB user is DBA_: False
 
 ## Findings
 
-### CRITICAL
-
-#### SQLi 
+### SQLi 
 - Host: http://goodgames.htb/login
 - What: 'email' variable was not properly sanitized after POST request
 ```
@@ -56,8 +54,8 @@ Parameter: #1* ((custom) POST)
 back-end DBMS: MySQL >= 5.0.12
 ```
 
-#### Password Hygiene
-**Easily cracked password**
+### Password Hygiene
+#### Easily cracked password
 - Host: http://goodgames.htb/_  
 ```
 Database: main
@@ -68,8 +66,8 @@ Table: user
 | 1  | admin    | admin@goodgames.htb | 2b22337f218b2d82dfc3b6f77e7cb8ec | superadministrator |
 +----+----------+---------------------+----------------------------------+--------------------+
 ```
-**Password Re-use**
-- Host: [http://internal-administration.goodgames.htb/](http://internal-administration.goodgames.htb)
+#### Password Re-use
+- Host: http://internal-administration.goodgames.htb
 ```
 Database: main
 Table: user
