@@ -27,7 +27,7 @@ _current DB user is DBA_: False
 - --data "Email=\*"  
 
 [x] Check for input validation at [coming-soon](http://goodgames.htb/coming-soon)
-- page performs a GET request to non-scoped server - "nkdev.us11.list-manage.com"
+- IGNORED - page performs a GET request to non-scoped server - "nkdev.us11.list-manage.com"
 
 ### Cracking
 [x] Attempt to crack obtained hases from SQLi
