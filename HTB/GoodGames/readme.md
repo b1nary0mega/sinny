@@ -57,8 +57,8 @@ back-end DBMS: MySQL >= 5.0.12
 ```
 
 #### Password Hygiene
+**Easily cracked password**
 - Host: http://goodgames.htb/_  
-- What: easily cracked password
 ```
 Database: main
 Table: user
@@ -68,6 +68,16 @@ Table: user
 | 1  | admin    | admin@goodgames.htb | 2b22337f218b2d82dfc3b6f77e7cb8ec | superadministrator |
 +----+----------+---------------------+----------------------------------+--------------------+
 ```
+**Password Re-use**
+- Host: [http://internal-administration.goodgames.htb/](http://internal-administration.goodgames.htb)
+```
+Database: main
+Table: user
++----+----------+--------------------+
+| id | name     | password           |
++----+----------+--------------------+
+| 1  | admin    | superadministrator |
++----+----------+--------------------+
 
 ## Enumeration
 
