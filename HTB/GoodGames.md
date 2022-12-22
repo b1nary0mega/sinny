@@ -9,7 +9,7 @@ _Host Name:_ goodgames.htb  (added to /etc/hosts)
 
 _current DB user_: 'main_admin@localhost'
 
-_current user is DBA_: False
+_current DB user is DBA_: False
 
 ## To-Do
 ### Input Validation
