@@ -1,7 +1,7 @@
 #HTB - Good Games
 Keywords: #python #docker #weak-pwd
 
-## Details
+## Notes
 
 _Current IP:_ 10.10.11.130
 _Host Name:_ goodgames.htb  (added to /etc/hosts)
@@ -13,6 +13,8 @@ _Host Name:_ goodgames.htb  (added to /etc/hosts)
 
 [ ] Check for input validation at [coming-soon](http://goodgames.htb/coming-soon)
 - there is a single input field for email
+
+## Enumeration
 
 ### nmaps
 
