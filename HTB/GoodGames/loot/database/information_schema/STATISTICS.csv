@@ -1,0 +1,6 @@
+PACKED,COMMENT,NULLABLE,SUB_PART,EXPRESSION,INDEX_NAME,INDEX_TYPE,IS_VISIBLE,NON_UNIQUE,TABLE_NAME,COLUMN_NAME,COLLATION,INDEX_SCHEMA,SEQ_IN_INDEX,TABLE_SCHEMA,INDEX_COMMENT,TABLE_CATALOG,CARDINALITY
+def,<blank>,1,main,<blank>,main,YES,0,<blank>,A,id,<blank>,BTREE,user,<blank>,PRIMARY,1,<blank>
+def,<blank>,1,main,<blank>,main,YES,0,YES,A,email,<blank>,BTREE,user,<blank>,email,1,<blank>
+def,<blank>,1,main,<blank>,main,YES,0,<blank>,A,id,<blank>,BTREE,blog,<blank>,PRIMARY,0,<blank>
+def,<blank>,1,main,<blank>,main,YES,0,<blank>,A,id,<blank>,BTREE,blog_comments,<blank>,PRIMARY,2,<blank>
+

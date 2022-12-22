@@ -1,0 +1,85 @@
+DATA_TYPE,ROUTINE_TYPE,NUMERIC_SCALE,SPECIFIC_NAME,COLLATION_NAME,DTD_IDENTIFIER,PARAMETER_MODE,PARAMETER_NAME,SPECIFIC_SCHEMA,ORDINAL_POSITION,SPECIFIC_CATALOG,NUMERIC_PRECISION,CHARACTER_SET_NAME,DATETIME_PRECISION,CHARACTER_OCTET_LENGTH,CHARACTER_MAXIMUM_LENGTH
+varchar,FUNCTION,NULL,extract_schema_from_file_name,utf8mb4_0900_ai_ci,varchar(64),NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,256,64
+varchar,FUNCTION,NULL,extract_schema_from_file_name,utf8mb4_0900_ai_ci,varchar(512),IN,path,sys,1,def,NULL,utf8mb4,NULL,2048,512
+varchar,FUNCTION,NULL,extract_table_from_file_name,utf8mb4_0900_ai_ci,varchar(64),NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,256,64
+varchar,FUNCTION,NULL,extract_table_from_file_name,utf8mb4_0900_ai_ci,varchar(512),IN,path,sys,1,def,NULL,utf8mb4,NULL,2048,512
+text,FUNCTION,NULL,format_bytes,utf8mb4_0900_ai_ci,text,NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,65535,65535
+text,FUNCTION,NULL,format_bytes,utf8mb4_0900_ai_ci,text,IN,bytes,sys,1,def,NULL,utf8mb4,NULL,65535,65535
+varchar,FUNCTION,NULL,format_path,utf8mb4_0900_ai_ci,varchar(512),NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,2048,512
+varchar,FUNCTION,NULL,format_path,utf8mb4_0900_ai_ci,varchar(512),IN,in_path,sys,1,def,NULL,utf8mb4,NULL,2048,512
+longtext,FUNCTION,NULL,format_statement,utf8mb4_0900_ai_ci,longtext,NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,4294967295,4294967295
+longtext,FUNCTION,NULL,format_statement,utf8mb4_0900_ai_ci,longtext,IN,statement,sys,1,def,NULL,utf8mb4,NULL,4294967295,4294967295
+text,FUNCTION,NULL,format_time,utf8mb4_0900_ai_ci,text,NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,65535,65535
+text,FUNCTION,NULL,format_time,utf8mb4_0900_ai_ci,text,IN,picoseconds,sys,1,def,NULL,utf8mb4,NULL,65535,65535
+text,FUNCTION,NULL,list_add,utf8mb4_0900_ai_ci,text,NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,65535,65535
+text,FUNCTION,NULL,list_add,utf8mb4_0900_ai_ci,text,IN,in_list,sys,1,def,NULL,utf8mb4,NULL,65535,65535
+text,FUNCTION,NULL,list_add,utf8mb4_0900_ai_ci,text,IN,in_add_value,sys,2,def,NULL,utf8mb4,NULL,65535,65535
+text,FUNCTION,NULL,list_drop,utf8mb4_0900_ai_ci,text,NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,65535,65535
+text,FUNCTION,NULL,list_drop,utf8mb4_0900_ai_ci,text,IN,in_list,sys,1,def,NULL,utf8mb4,NULL,65535,65535
+text,FUNCTION,NULL,list_drop,utf8mb4_0900_ai_ci,text,IN,in_drop_value,sys,2,def,NULL,utf8mb4,NULL,65535,65535
+enum,FUNCTION,NULL,ps_is_account_enabled,utf8mb4_0900_ai_ci,"enum('YES','NO')",NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,12,3
+varchar,FUNCTION,NULL,ps_is_account_enabled,utf8mb4_0900_ai_ci,varchar(255),IN,in_host,sys,1,def,NULL,utf8mb4,NULL,1020,255
+varchar,FUNCTION,NULL,ps_is_account_enabled,utf8mb4_0900_ai_ci,varchar(32),IN,in_user,sys,2,def,NULL,utf8mb4,NULL,128,32
+enum,FUNCTION,NULL,ps_is_consumer_enabled,utf8mb4_0900_ai_ci,"enum('YES','NO')",NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,12,3
+varchar,FUNCTION,NULL,ps_is_consumer_enabled,utf8mb4_0900_ai_ci,varchar(64),IN,in_consumer,sys,1,def,NULL,utf8mb4,NULL,256,64
+enum,FUNCTION,NULL,ps_is_instrument_default_enabled,utf8mb4_0900_ai_ci,"enum('YES','NO')",NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,12,3
+varchar,FUNCTION,NULL,ps_is_instrument_default_enabled,utf8mb4_0900_ai_ci,varchar(128),IN,in_instrument,sys,1,def,NULL,utf8mb4,NULL,512,128
+enum,FUNCTION,NULL,ps_is_instrument_default_timed,utf8mb4_0900_ai_ci,"enum('YES','NO')",NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,12,3
+varchar,FUNCTION,NULL,ps_is_instrument_default_timed,utf8mb4_0900_ai_ci,varchar(128),IN,in_instrument,sys,1,def,NULL,utf8mb4,NULL,512,128
+enum,FUNCTION,NULL,ps_is_thread_instrumented,utf8mb4_0900_ai_ci,"enum('YES','NO','UNKNOWN')",NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,28,7
+bigint,FUNCTION,0,ps_is_thread_instrumented,NULL,bigint unsigned,IN,in_connection_id,sys,1,def,20,NULL,NULL,NULL,NULL
+bigint,FUNCTION,0,ps_thread_id,NULL,bigint unsigned,NULL,NULL,sys,0,def,20,NULL,NULL,NULL,NULL
+bigint,FUNCTION,0,ps_thread_id,NULL,bigint unsigned,IN,in_connection_id,sys,1,def,20,NULL,NULL,NULL,NULL
+text,FUNCTION,NULL,ps_thread_account,utf8mb4_0900_ai_ci,text,NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,65535,65535
+bigint,FUNCTION,0,ps_thread_account,NULL,bigint unsigned,IN,in_thread_id,sys,1,def,20,NULL,NULL,NULL,NULL
+longtext,FUNCTION,NULL,ps_thread_stack,latin1_swedish_ci,longtext,NULL,NULL,sys,0,def,NULL,latin1,NULL,4294967295,4294967295
+bigint,FUNCTION,0,ps_thread_stack,NULL,bigint unsigned,IN,thd_id,sys,1,def,20,NULL,NULL,NULL,NULL
+tinyint,FUNCTION,0,ps_thread_stack,NULL,tinyint(1),IN,debug,sys,2,def,3,NULL,NULL,NULL,NULL
+longtext,FUNCTION,NULL,ps_thread_trx_info,utf8mb4_0900_ai_ci,longtext,NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,4294967295,4294967295
+bigint,FUNCTION,0,ps_thread_trx_info,NULL,bigint unsigned,IN,in_thread_id,sys,1,def,20,NULL,NULL,NULL,NULL
+text,FUNCTION,NULL,quote_identifier,utf8mb4_0900_ai_ci,text,NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,65535,65535
+text,FUNCTION,NULL,quote_identifier,utf8mb4_0900_ai_ci,text,IN,in_identifier,sys,1,def,NULL,utf8mb4,NULL,65535,65535
+varchar,FUNCTION,NULL,sys_get_config,utf8mb4_0900_ai_ci,varchar(128),NULL,NULL,sys,0,def,NULL,utf8mb4,NULL,512,128
+varchar,FUNCTION,NULL,sys_get_config,utf8mb4_0900_ai_ci,varchar(128),IN,in_variable_name,sys,1,def,NULL,utf8mb4,NULL,512,128
+varchar,FUNCTION,NULL,sys_get_config,utf8mb4_0900_ai_ci,varchar(128),IN,in_default_value,sys,2,def,NULL,utf8mb4,NULL,512,128
+tinyint,FUNCTION,0,version_major,NULL,tinyint unsigned,NULL,NULL,sys,0,def,3,NULL,NULL,NULL,NULL
+tinyint,FUNCTION,0,version_minor,NULL,tinyint unsigned,NULL,NULL,sys,0,def,3,NULL,NULL,NULL,NULL
+tinyint,FUNCTION,0,version_patch,NULL,tinyint unsigned,NULL,NULL,sys,0,def,3,NULL,NULL,NULL,NULL
+varchar,PROCEDURE,NULL,create_synonym_db,utf8mb4_0900_ai_ci,varchar(64),IN,in_db_name,sys,1,def,NULL,utf8mb4,NULL,256,64
+varchar,PROCEDURE,NULL,create_synonym_db,utf8mb4_0900_ai_ci,varchar(64),IN,in_synonym,sys,2,def,NULL,utf8mb4,NULL,256,64
+longtext,PROCEDURE,NULL,execute_prepared_stmt,utf8mb4_0900_ai_ci,longtext,IN,in_query,sys,1,def,NULL,utf8mb4,NULL,4294967295,4294967295
+int,PROCEDURE,0,diagnostics,NULL,int unsigned,IN,in_max_runtime,sys,1,def,10,NULL,NULL,NULL,NULL
+int,PROCEDURE,0,diagnostics,NULL,int unsigned,IN,in_interval,sys,2,def,10,NULL,NULL,NULL,NULL
+enum,PROCEDURE,NULL,diagnostics,utf8mb4_0900_ai_ci,"enum('current','medium','full')",IN,in_auto_config,sys,3,def,NULL,utf8mb4,NULL,28,7
+varchar,PROCEDURE,NULL,ps_trace_statement_digest,utf8mb4_0900_ai_ci,varchar(64),IN,in_digest,sys,1,def,NULL,utf8mb4,NULL,256,64
+int,PROCEDURE,0,ps_trace_statement_digest,NULL,int,IN,in_runtime,sys,2,def,10,NULL,NULL,NULL,NULL
+decimal,PROCEDURE,2,ps_trace_statement_digest,NULL,"decimal(2,2)",IN,in_interval,sys,3,def,2,NULL,NULL,NULL,NULL
+tinyint,PROCEDURE,0,ps_trace_statement_digest,NULL,tinyint(1),IN,in_start_fresh,sys,4,def,3,NULL,NULL,NULL,NULL
+tinyint,PROCEDURE,0,ps_trace_statement_digest,NULL,tinyint(1),IN,in_auto_enable,sys,5,def,3,NULL,NULL,NULL,NULL
+bigint,PROCEDURE,0,ps_trace_thread,NULL,bigint unsigned,IN,in_thread_id,sys,1,def,20,NULL,NULL,NULL,NULL
+varchar,PROCEDURE,NULL,ps_trace_thread,utf8mb4_0900_ai_ci,varchar(255),IN,in_outfile,sys,2,def,NULL,utf8mb4,NULL,1020,255
+decimal,PROCEDURE,2,ps_trace_thread,NULL,"decimal(20,2)",IN,in_max_runtime,sys,3,def,20,NULL,NULL,NULL,NULL
+decimal,PROCEDURE,2,ps_trace_thread,NULL,"decimal(20,2)",IN,in_interval,sys,4,def,20,NULL,NULL,NULL,NULL
+tinyint,PROCEDURE,0,ps_trace_thread,NULL,tinyint(1),IN,in_start_fresh,sys,5,def,3,NULL,NULL,NULL,NULL
+tinyint,PROCEDURE,0,ps_trace_thread,NULL,tinyint(1),IN,in_auto_setup,sys,6,def,3,NULL,NULL,NULL,NULL
+tinyint,PROCEDURE,0,ps_trace_thread,NULL,tinyint(1),IN,in_debug,sys,7,def,3,NULL,NULL,NULL,NULL
+varchar,PROCEDURE,NULL,ps_setup_disable_consumer,utf8mb4_0900_ai_ci,varchar(128),IN,consumer,sys,1,def,NULL,utf8mb4,NULL,512,128
+varchar,PROCEDURE,NULL,ps_setup_disable_instrument,utf8mb4_0900_ai_ci,varchar(128),IN,in_pattern,sys,1,def,NULL,utf8mb4,NULL,512,128
+bigint,PROCEDURE,0,ps_setup_disable_thread,NULL,bigint,IN,in_connection_id,sys,1,def,19,NULL,NULL,NULL,NULL
+varchar,PROCEDURE,NULL,ps_setup_enable_consumer,utf8mb4_0900_ai_ci,varchar(128),IN,consumer,sys,1,def,NULL,utf8mb4,NULL,512,128
+varchar,PROCEDURE,NULL,ps_setup_enable_instrument,utf8mb4_0900_ai_ci,varchar(128),IN,in_pattern,sys,1,def,NULL,utf8mb4,NULL,512,128
+bigint,PROCEDURE,0,ps_setup_enable_thread,NULL,bigint,IN,in_connection_id,sys,1,def,19,NULL,NULL,NULL,NULL
+tinyint,PROCEDURE,0,ps_setup_reset_to_default,NULL,tinyint(1),IN,in_verbose,sys,1,def,3,NULL,NULL,NULL,NULL
+int,PROCEDURE,0,ps_setup_save,NULL,int,IN,in_timeout,sys,1,def,10,NULL,NULL,NULL,NULL
+tinyint,PROCEDURE,0,ps_setup_show_disabled,NULL,tinyint(1),IN,in_show_instruments,sys,1,def,3,NULL,NULL,NULL,NULL
+tinyint,PROCEDURE,0,ps_setup_show_disabled,NULL,tinyint(1),IN,in_show_threads,sys,2,def,3,NULL,NULL,NULL,NULL
+tinyint,PROCEDURE,0,ps_setup_show_enabled,NULL,tinyint(1),IN,in_show_instruments,sys,1,def,3,NULL,NULL,NULL,NULL
+tinyint,PROCEDURE,0,ps_setup_show_enabled,NULL,tinyint(1),IN,in_show_threads,sys,2,def,3,NULL,NULL,NULL,NULL
+tinyint,PROCEDURE,0,ps_truncate_all_tables,NULL,tinyint(1),IN,in_verbose,sys,1,def,3,NULL,NULL,NULL,NULL
+enum,PROCEDURE,NULL,statement_performance_analyzer,utf8mb4_0900_ai_ci,"enum('snapshot','overall','delta','create_table','create_tmp','save','cleanup')",IN,in_action,sys,1,def,NULL,utf8mb4,NULL,48,12
+varchar,PROCEDURE,NULL,statement_performance_analyzer,utf8mb4_0900_ai_ci,varchar(129),IN,in_table,sys,2,def,NULL,utf8mb4,NULL,516,129
+set,PROCEDURE,NULL,statement_performance_analyzer,utf8mb4_0900_ai_ci,"set('with_runtimes_in_95th_percentile','analysis','with_errors_or_warnings','with_full_table_scans','with_sorting','with_temp_tables','custom')",IN,in_views,sys,3,def,NULL,utf8mb4,NULL,496,124
+varchar,PROCEDURE,NULL,table_exists,utf8mb4_0900_ai_ci,varchar(64),IN,in_db,sys,1,def,NULL,utf8mb4,NULL,256,64
+varchar,PROCEDURE,NULL,table_exists,utf8mb4_0900_ai_ci,varchar(64),IN,in_table,sys,2,def,NULL,utf8mb4,NULL,256,64
+enum,PROCEDURE,NULL,table_exists,utf8mb4_0900_ai_ci,"enum('','BASE TABLE','VIEW','TEMPORARY')",OUT,out_exists,sys,3,def,NULL,utf8mb4,NULL,40,10
+

@@ -1,0 +1,48 @@
+LOAD_OPTION,PLUGIN_NAME,PLUGIN_TYPE,PLUGIN_AUTHOR,PLUGIN_STATUS,PLUGIN_LIBRARY,PLUGIN_LICENSE,PLUGIN_VERSION,PLUGIN_DESCRIPTION,PLUGIN_TYPE_VERSION,PLUGIN_LIBRARY_VERSION
+FORCE,STORAGE ENGINE,1.0,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,This is a pseudo storage engine to represent the binlog in a transaction,<blank>,binlog
+FORCE,AUTHENTICATION,1.1,Oracle Corporation,2.1,GPL,ACTIVE,<blank>,Native MySQL authentication,<blank>,mysql_native_password
+FORCE,AUTHENTICATION,1.1,Oracle Corporation,2.1,GPL,ACTIVE,<blank>,SHA256 password authentication,<blank>,sha256_password
+FORCE,AUTHENTICATION,1.0,Oracle Corporation,2.1,GPL,ACTIVE,<blank>,Caching sha2 authentication,<blank>,caching_sha2_password
+FORCE,AUDIT,1.0,Oracle Corporation,4.1,GPL,ACTIVE,<blank>,Cache cleaner for Caching sha2 authentication,<blank>,sha2_cache_cleaner
+FORCE,DAEMON,1.0,Oracle,80027.0,GPL,ACTIVE,<blank>,A plugin that implements the keyring component services atop of the keyring plugin,<blank>,daemon_keyring_proxy_plugin
+FORCE,STORAGE ENGINE,1.0,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,CSV storage engine,<blank>,CSV
+FORCE,STORAGE ENGINE,1.0,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,"Hash based, stored in memory, useful for temporary tables",<blank>,MEMORY
+FORCE,STORAGE ENGINE,8.0,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,"Supports transactions, row-level locking, and foreign keys",<blank>,InnoDB
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,InnoDB transactions,<blank>,INNODB_TRX
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,Statistics for the InnoDB compression,<blank>,INNODB_CMP
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,Statistics for the InnoDB compression; reset cumulated counts,<blank>,INNODB_CMP_RESET
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,Statistics for the InnoDB compressed buffer pool,<blank>,INNODB_CMPMEM
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,Statistics for the InnoDB compressed buffer pool; reset cumulated counts,<blank>,INNODB_CMPMEM_RESET
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,Statistics for the InnoDB compression (per index),<blank>,INNODB_CMP_PER_INDEX
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,Statistics for the InnoDB compression (per index); reset cumulated counts,<blank>,INNODB_CMP_PER_INDEX_RESET
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,InnoDB Buffer Page Information,<blank>,INNODB_BUFFER_PAGE
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,InnoDB Buffer Page in LRU,<blank>,INNODB_BUFFER_PAGE_LRU
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,InnoDB Buffer Pool Statistics Information ,<blank>,INNODB_BUFFER_POOL_STATS
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,InnoDB Temp Table Stats,<blank>,INNODB_TEMP_TABLE_INFO
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,InnoDB Metrics Info,<blank>,INNODB_METRICS
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,Default stopword list for InnDB Full Text Search,<blank>,INNODB_FT_DEFAULT_STOPWORD
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,INNODB AUXILIARY FTS DELETED TABLE,<blank>,INNODB_FT_DELETED
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,INNODB AUXILIARY FTS BEING DELETED TABLE,<blank>,INNODB_FT_BEING_DELETED
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,INNODB AUXILIARY FTS CONFIG TABLE,<blank>,INNODB_FT_CONFIG
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,INNODB AUXILIARY FTS INDEX CACHED,<blank>,INNODB_FT_INDEX_CACHE
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,INNODB AUXILIARY FTS INDEX TABLE,<blank>,INNODB_FT_INDEX_TABLE
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,InnoDB INNODB_TABLES,<blank>,INNODB_TABLES
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,InnoDB INNODB_TABLESTATS,<blank>,INNODB_TABLESTATS
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,InnoDB INNODB_INDEXES,<blank>,INNODB_INDEXES
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,InnoDB INNODB_TABLESPACES,<blank>,INNODB_TABLESPACES
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,InnoDB INNODB_COLUMNS,<blank>,INNODB_COLUMNS
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,InnoDB INNODB_VIRTUAL,<blank>,INNODB_VIRTUAL
+FORCE,INFORMATION SCHEMA,8.2,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,InnoDB cached indexes,<blank>,INNODB_CACHED_INDEXES
+FORCE,INFORMATION SCHEMA,8.0,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,InnoDB Session Temporary tablespaces,<blank>,INNODB_SESSION_TEMP_TABLESPACES
+FORCE,STORAGE ENGINE,1.0,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,MyISAM storage engine,<blank>,MyISAM
+FORCE,STORAGE ENGINE,1.0,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,Collection of identical MyISAM tables,<blank>,MRG_MYISAM
+FORCE,STORAGE ENGINE,0.1,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,Performance Schema,<blank>,PERFORMANCE_SCHEMA
+FORCE,STORAGE ENGINE,1.0,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,InnoDB temporary storage engine,<blank>,TempTable
+ON,STORAGE ENGINE,3.0,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,Archive storage engine,<blank>,ARCHIVE
+ON,STORAGE ENGINE,1.0,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,/dev/null storage engine (anything you write to it disappears),<blank>,BLACKHOLE
+OFF,STORAGE ENGINE,1.0,Oracle Corporation,80027.0,GPL,DISABLED,<blank>,Federated MySQL storage engine,<blank>,FEDERATED
+ON,FTPARSER,0.1,Oracle Corporation,1.1,GPL,ACTIVE,<blank>,Ngram Full-Text Parser,<blank>,ngram
+ON,AUDIT,1.0,Oracle Corporation,4.1,GPL,ACTIVE,<blank>,Cache cleaner for sha2 authentication in X plugin,<blank>,mysqlx_cache_cleaner
+ON,DAEMON,1.0,Oracle Corporation,80027.0,GPL,ACTIVE,<blank>,X Plugin for MySQL,<blank>,mysqlx
+ON,auth_socket,AUTHENTICATION,Oracle Corporation,ACTIVE,auth_socket.so,GPL,1.1,Unix Socket based authentication,2.1,1.10
+

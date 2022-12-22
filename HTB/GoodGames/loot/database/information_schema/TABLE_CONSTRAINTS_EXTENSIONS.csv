@@ -1,0 +1,6 @@
+TABLE_NAME,CONSTRAINT_NAME,ENGINE_ATTRIBUTE,CONSTRAINT_SCHEMA,CONSTRAINT_CATALOG,SECONDARY_ENGINE_ATTRIBUTE
+<blank>,PRIMARY,user,main,def,<blank>
+<blank>,email,user,main,def,<blank>
+<blank>,PRIMARY,blog,main,def,<blank>
+<blank>,PRIMARY,blog_comments,main,def,<blank>
+

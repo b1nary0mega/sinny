@@ -1,0 +1,49 @@
+UNIT_NAME,UNIT_TYPE,DESCRIPTION,CONVERSION_FACTOR
+British chain (Sears 1922 truncated),LINEAR,<blank>,20.116756
+British foot (Sears 1922 truncated),LINEAR,<blank>,0.30479933333333337
+chain,LINEAR,<blank>,20.1168
+yard,LINEAR,<blank>,0.9144
+British foot (1936),LINEAR,<blank>,0.3048007491
+British link (Sears 1922 truncated),LINEAR,<blank>,0.20116756
+Gold Coast foot,LINEAR,<blank>,0.3047997101815088
+Indian yard (1937),LINEAR,<blank>,0.91439523
+link,LINEAR,<blank>,0.201168
+Indian yard,LINEAR,<blank>,0.9143985307444408
+Indian yard (1975),LINEAR,<blank>,0.9143985
+Indian yard (1962),LINEAR,<blank>,0.9143988
+Indian foot (1975),LINEAR,<blank>,0.3047995
+Indian foot (1937),LINEAR,<blank>,0.30479841
+Indian foot,LINEAR,<blank>,0.30479951024814694
+Indian foot (1962),LINEAR,<blank>,0.3047996
+British foot (1865),LINEAR,<blank>,0.30480083333333335
+British link (Benoit 1895 B),LINEAR,<blank>,0.2011678249437587
+Statute mile,LINEAR,<blank>,1609.344
+British chain (Benoit 1895 B),LINEAR,<blank>,20.116782494375872
+British foot (Benoit 1895 B),LINEAR,<blank>,0.30479973476327077
+British link (Benoit 1895 A),LINEAR,<blank>,0.201167824
+nautical mile,LINEAR,<blank>,1852
+US survey link,LINEAR,<blank>,0.2011684023368047
+metre,LINEAR,<blank>,1
+US survey chain,LINEAR,<blank>,20.11684023368047
+fathom,LINEAR,<blank>,1.8288
+German legal metre,LINEAR,<blank>,1.0000135965
+Clarke's foot,LINEAR,<blank>,0.3047972654
+British link (Sears 1922),LINEAR,<blank>,0.2011676512155263
+British foot (Sears 1922),LINEAR,<blank>,0.3047994715386762
+millimetre,LINEAR,<blank>,0.001
+US survey mile,LINEAR,<blank>,1609.3472186944375
+centimetre,LINEAR,<blank>,0.01
+British yard (Sears 1922),LINEAR,<blank>,0.9143984146160288
+US survey foot,LINEAR,<blank>,0.30480060960121924
+kilometre,LINEAR,<blank>,1000
+Clarke's yard,LINEAR,<blank>,0.9143917962
+British chain (Benoit 1895 A),LINEAR,<blank>,20.1167824
+Clarke's chain,LINEAR,<blank>,20.1166195164
+Clarke's link,LINEAR,<blank>,0.201166195164
+British chain (Sears 1922),LINEAR,<blank>,20.116765121552632
+British yard (Benoit 1895 A),LINEAR,<blank>,0.9143992
+British yard (Sears 1922 truncated),LINEAR,<blank>,0.914398
+British yard (Benoit 1895 B),LINEAR,<blank>,0.9143992042898124
+foot,LINEAR,<blank>,0.3048
+British foot (Benoit 1895 A),LINEAR,<blank>,0.3047997333333333
+

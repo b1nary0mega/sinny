@@ -1,0 +1,4 @@
+id,blog_id,user,comment,created_at,is_accepted
+1,1,admin,"I absolutely loved this article, keep up the good work!",1,<blank>
+0,1,admin,This is truly a masterpiece!,2,<blank>
+

@@ -1,0 +1,9 @@
+FLAG,NAME,PATH,SPACE,SPACE_TYPE
+18432,innodb_system,ibdata1,0,System
+0,innodb_undo_001,./undo_001,4294967279,Single
+0,innodb_undo_002,./undo_002,4294967278,Single
+16417,main/blog,./main/blog.ibd,25,Single
+16417,main/blog_comments,./main/blog_comments.ibd,26,Single
+16417,main/user,./main/user.ibd,27,Single
+16417,sys/sys_config,./sys/sys_config.ibd,1,Single
+

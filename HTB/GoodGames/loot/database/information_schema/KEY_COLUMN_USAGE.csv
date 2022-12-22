@@ -1,0 +1,6 @@
+TABLE_NAME,COLUMN_NAME,TABLE_SCHEMA,TABLE_CATALOG,CONSTRAINT_NAME,ORDINAL_POSITION,CONSTRAINT_SCHEMA,CONSTRAINT_CATALOG,REFERENCED_TABLE_NAME,REFERENCED_COLUMN_NAME,REFERENCED_TABLE_SCHEMA,POSITION_IN_UNIQUE_CONSTRAINT
+<blank>,id,<blank>,<blank>,PRIMARY,1,main,def,main,blog,<blank>,def
+<blank>,id,<blank>,<blank>,PRIMARY,1,main,def,main,blog_comments,<blank>,def
+<blank>,email,<blank>,<blank>,email,1,main,def,main,user,<blank>,def
+<blank>,id,<blank>,<blank>,PRIMARY,1,main,def,main,user,<blank>,def
+

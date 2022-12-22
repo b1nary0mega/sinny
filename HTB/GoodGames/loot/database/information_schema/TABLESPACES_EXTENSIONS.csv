@@ -1,0 +1,11 @@
+TABLESPACE_NAME,ENGINE_ATTRIBUTE
+mysql,mysql
+innodb_system,innodb_system
+innodb_temporary,innodb_temporary
+innodb_undo_001,innodb_undo_001
+innodb_undo_002,innodb_undo_002
+sys/sys_config,sys/sys_config
+main/blog,main/blog
+main/blog_comments,main/blog_comments
+main/user,main/user
+

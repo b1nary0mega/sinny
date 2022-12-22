@@ -1,0 +1,10 @@
+GRANTEE,IS_GRANTABLE,TABLE_SCHEMA,TABLE_CATALOG,PRIVILEGE_TYPE
+'main_admin'@'localhost',YES,main,def,SELECT
+'main_admin'@'localhost',YES,main,def,INSERT
+'main_admin'@'localhost',YES,main,def,UPDATE
+'main_admin'@'localhost',YES,main,def,DELETE
+'main_admin'@'localhost',YES,main,def,CREATE
+'main_admin'@'localhost',YES,main,def,DROP
+'main_admin'@'localhost',YES,main,def,REFERENCES
+'main_admin'@'localhost',YES,main,def,ALTER
+

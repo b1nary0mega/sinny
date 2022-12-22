@@ -1,0 +1,4 @@
+SQL_PATH,SCHEMA_NAME,CATALOG_NAME,DEFAULT_ENCRYPTION,DEFAULT_COLLATION_NAME,DEFAULT_CHARACTER_SET_NAME
+<blank>,information_schema,def,NO,utf8_general_ci,utf8
+<blank>,main,def,NO,utf8mb4_0900_ai_ci,utf8mb4
+
