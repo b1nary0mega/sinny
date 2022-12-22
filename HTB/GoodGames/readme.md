@@ -12,6 +12,10 @@ _current DB user_: 'main_admin@localhost'
 _current DB user is DBA_: False
 
 ## To-Do
+[ ] Determine where cracked login/password can be used
+- does this provide any additional exposure/functions/features?
+
+## Done
 ### Input Validation
 [x] Check for input validation at [signup](http://goodgames.htb/signup)
 - --data "email=*&name=*&password=*&password2=*"
