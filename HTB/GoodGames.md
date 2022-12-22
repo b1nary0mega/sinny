@@ -13,9 +13,8 @@ _current DB user is DBA_: False
 
 ## To-Do
 ### Input Validation
-[ ] Check for input validation at [signup](http://goodgames.htb/signup)
-- there are two different forms, one for registration (has 4 input fields) and one for logging in (has 2 input fields).
-- once logged in, there is another 2 input fields for changing account password
+[x] Check for input validation at [signup](http://goodgames.htb/signup)
+- --data "email=*&name=*&password=*&password2=*"
 
 [x] Check for input validation at [login](http://goodgames.htb/login)
 - --data "email=\*&password=\*"  
@@ -480,6 +479,115 @@ it is recommended to perform only basic UNION tests if there is not at least one
 [12:18:42] [CRITICAL] all tested parameters do not appear to be injectable. Try to increase values for '--level'/'--risk' options if you wish to perform more tests. If you suspect that there is some kind of protection mechanism involved (e.g. WAF) maybe you could try to use option '--tamper' (e.g. '--tamper=space2comment') and/or switch '--random-agent'
 
 [*] ending @ 12:18:42 /2022-12-22/
+```
+**signup**
+```
+[  1:03PM ]  [ ops@redteam:~/Documents/PT/HTB-goodgames/data ]                                                                                                                       
+ $ sqlmap -u "http://goodgames.htb/signup" --data "email=*&name=*&password=*&password2=*"                                                                                            
+        ___                                                                                                                                                                          
+       __H__                                                                                                                                                                         
+ ___ ___[,]_____ ___ ___  {1.6.12#stable}                                                                                                                                            
+|_ -| . [,]     | .'| . |                                                                                                                                                            
+|___|_  [(]_|_|_|__,|  _|                                                                                                                                                            
+      |_|V...       |_|   https://sqlmap.org                                                                                                                                         
+                                                                                                                                                                                     
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and fede
+ral laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program                                                                     
+                                                                                                                                                                                     
+[*] starting @ 13:04:24 /2022-12-22/                                                                                                                                                 
+                                                                                                                                                                                     
+custom injection marker ('*') found in POST body. Do you want to process it? [Y/n/q] Y                                                                                               
+[13:04:27] [INFO] testing connection to the target URL                                                                                                                               
+[13:04:28] [INFO] checking if the target is protected by some kind of WAF/IPS                                                                                                        
+[13:04:28] [INFO] testing if the target URL content is stable                                                                                                                        
+[13:04:28] [WARNING] target URL content is not stable (i.e. content differs). sqlmap will base the page comparison on a sequence matcher. If no dynamic nor injectable parameters are
+ detected, or in case of junk results, refer to user's manual paragraph 'Page comparison'                                                                                            
+how do you want to proceed? [(C)ontinue/(s)tring/(r)egex/(q)uit] C                                                                                                                   
+[13:04:42] [INFO] testing if (custom) POST parameter '#1*' is dynamic                                                                                                                
+[13:04:43] [WARNING] (custom) POST parameter '#1*' does not appear to be dynamic                                                                                                     
+[13:04:43] [WARNING] heuristic (basic) test shows that (custom) POST parameter '#1*' might not be injectable                                                                         
+[13:04:43] [INFO] testing for SQL injection on (custom) POST parameter '#1*'                                                                                                         
+[13:04:43] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'                                                                                                         
+[13:04:44] [INFO] testing 'Boolean-based blind - Parameter replace (original value)'                                                                                                 
+[13:04:45] [INFO] testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)'                                                                 
+[13:04:45] [INFO] testing 'PostgreSQL AND error-based - WHERE or HAVING clause'                                                                                                      
+[13:04:45] [INFO] testing 'Microsoft SQL Server/Sybase AND error-based - WHERE or HAVING clause (IN)'                                                                                
+[13:04:46] [INFO] testing 'Oracle AND error-based - WHERE or HAVING clause (XMLType)'                                                                                                
+[13:04:46] [INFO] testing 'Generic inline queries'                                                                                                                                   
+[13:04:46] [INFO] testing 'PostgreSQL > 8.1 stacked queries (comment)'                                                                                                               
+[13:04:46] [INFO] testing 'Microsoft SQL Server/Sybase stacked queries (comment)'                                                                                                    
+[13:04:47] [INFO] testing 'Oracle stacked queries (DBMS_PIPE.RECEIVE_MESSAGE - comment)'                                                                                             
+[13:04:47] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)'                                                                                                       
+[13:04:47] [INFO] testing 'PostgreSQL > 8.1 AND time-based blind'                                                                                                                    
+[13:04:47] [INFO] testing 'Microsoft SQL Server/Sybase time-based blind (IF)'                                                                                                        
+[13:04:48] [INFO] testing 'Oracle AND time-based blind'                                                                                                                              
+it is recommended to perform only basic UNION tests if there is not at least one other (potential) technique found. Do you want to reduce the number of requests? [Y/n] Y            
+[13:04:54] [INFO] testing 'Generic UNION query (NULL) - 1 to 10 columns'                                                                                                             
+[13:04:54] [WARNING] (custom) POST parameter '#1*' does not seem to be injectable                                                                                                    
+[13:04:54] [INFO] testing if (custom) POST parameter '#2*' is dynamic                                                                                                                
+[13:04:54] [WARNING] (custom) POST parameter '#2*' does not appear to be dynamic                                                                                                     
+[13:04:55] [WARNING] heuristic (basic) test shows that (custom) POST parameter '#2*' might not be injectable
+[13:04:55] [INFO] testing for SQL injection on (custom) POST parameter '#2*'                                                                                                         
+[13:04:55] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[13:04:55] [INFO] testing 'Boolean-based blind - Parameter replace (original value)'
+[13:04:56] [INFO] testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)'
+[13:04:56] [INFO] testing 'PostgreSQL AND error-based - WHERE or HAVING clause'
+[13:04:56] [INFO] testing 'Microsoft SQL Server/Sybase AND error-based - WHERE or HAVING clause (IN)'
+[13:04:57] [INFO] testing 'Oracle AND error-based - WHERE or HAVING clause (XMLType)'
+[13:04:57] [INFO] testing 'Generic inline queries'
+[13:04:57] [INFO] testing 'PostgreSQL > 8.1 stacked queries (comment)'
+[13:04:57] [INFO] testing 'Microsoft SQL Server/Sybase stacked queries (comment)'
+[13:04:57] [INFO] testing 'Oracle stacked queries (DBMS_PIPE.RECEIVE_MESSAGE - comment)'
+[13:04:58] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)'
+[13:04:58] [INFO] testing 'PostgreSQL > 8.1 AND time-based blind'
+[13:04:58] [INFO] testing 'Microsoft SQL Server/Sybase time-based blind (IF)'
+[13:04:59] [INFO] testing 'Oracle AND time-based blind'
+[13:04:59] [INFO] testing 'Generic UNION query (NULL) - 1 to 10 columns'
+[13:05:00] [WARNING] (custom) POST parameter '#2*' does not seem to be injectable
+[13:05:00] [INFO] testing if (custom) POST parameter '#3*' is dynamic
+[13:05:00] [WARNING] (custom) POST parameter '#3*' does not appear to be dynamic
+[13:05:00] [WARNING] heuristic (basic) test shows that (custom) POST parameter '#3*' might not be injectable
+[13:05:00] [INFO] testing for SQL injection on (custom) POST parameter '#3*'
+[13:05:00] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[13:05:01] [INFO] testing 'Boolean-based blind - Parameter replace (original value)'
+[13:05:01] [INFO] testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)'
+[13:05:01] [INFO] testing 'PostgreSQL AND error-based - WHERE or HAVING clause'
+[13:05:01] [INFO] testing 'Microsoft SQL Server/Sybase AND error-based - WHERE or HAVING clause (IN)'
+[13:05:02] [INFO] testing 'Oracle AND error-based - WHERE or HAVING clause (XMLType)'
+[13:05:02] [INFO] testing 'Generic inline queries'
+[13:05:02] [INFO] testing 'PostgreSQL > 8.1 stacked queries (comment)'
+[13:05:02] [INFO] testing 'Microsoft SQL Server/Sybase stacked queries (comment)'
+[13:05:03] [INFO] testing 'Oracle stacked queries (DBMS_PIPE.RECEIVE_MESSAGE - comment)'
+[13:05:03] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)'
+[13:05:03] [INFO] testing 'PostgreSQL > 8.1 AND time-based blind'
+[13:05:04] [INFO] testing 'Microsoft SQL Server/Sybase time-based blind (IF)'
+[13:05:04] [INFO] testing 'Oracle AND time-based blind'
+[13:05:04] [INFO] testing 'Generic UNION query (NULL) - 1 to 10 columns'
+[13:05:05] [WARNING] (custom) POST parameter '#3*' does not seem to be injectable
+[13:05:05] [INFO] testing if (custom) POST parameter '#4*' is dynamic
+[13:05:05] [WARNING] (custom) POST parameter '#4*' does not appear to be dynamic
+[13:05:05] [WARNING] heuristic (basic) test shows that (custom) POST parameter '#4*' might not be injectable
+[13:05:05] [INFO] testing for SQL injection on (custom) POST parameter '#4*'
+[13:05:05] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[13:05:06] [INFO] testing 'Boolean-based blind - Parameter replace (original value)'
+[13:05:06] [INFO] testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)'
+[13:05:06] [INFO] testing 'PostgreSQL AND error-based - WHERE or HAVING clause'
+[13:05:07] [INFO] testing 'Microsoft SQL Server/Sybase AND error-based - WHERE or HAVING clause (IN)'
+[13:05:07] [INFO] testing 'Oracle AND error-based - WHERE or HAVING clause (XMLType)'
+[13:05:07] [INFO] testing 'Generic inline queries'
+[13:05:07] [INFO] testing 'PostgreSQL > 8.1 stacked queries (comment)'
+[13:05:08] [INFO] testing 'Microsoft SQL Server/Sybase stacked queries (comment)'
+[13:05:08] [INFO] testing 'Oracle stacked queries (DBMS_PIPE.RECEIVE_MESSAGE - comment)'
+[13:05:08] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)'
+[13:05:09] [INFO] testing 'PostgreSQL > 8.1 AND time-based blind'
+[13:05:09] [INFO] testing 'Microsoft SQL Server/Sybase time-based blind (IF)'
+[13:05:09] [INFO] testing 'Oracle AND time-based blind'
+[13:05:09] [INFO] testing 'Generic UNION query (NULL) - 1 to 10 columns'
+[13:05:10] [WARNING] (custom) POST parameter '#4*' does not seem to be injectable
+[13:05:10] [CRITICAL] all tested parameters do not appear to be injectable. Try to increase values for '--level'/'--risk' options if you wish to perform more tests. If you suspect t
+hat there is some kind of protection mechanism involved (e.g. WAF) maybe you could try to use option '--tamper' (e.g. '--tamper=space2comment') and/or switch '--random-agent'
+
+
 ```
 
 **login**
