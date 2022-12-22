@@ -30,8 +30,12 @@ _current DB user is DBA_: False
 - initial attempt with rockyou.txt; no clear-text passwords found.
 
 ## Findings
+
 ### CRITICAL
-SQLi - http://goodgames.htb/login - POST - email
+
+#### SQLi 
+- Host: http://goodgames.htb/login
+- What: 'email' variable was not properly sanitized after POST request
 ```
 sqlmap identified the following injection point(s) with a total of 173 HTTP(s) requests:
 ---
@@ -47,8 +51,10 @@ Parameter: #1* ((custom) POST)
 [12:35:25] [INFO] the back-end DBMS is MySQL
 back-end DBMS: MySQL >= 5.0.12
 ```
-### CRITICAL
-Password Hygiene - http://goodgames.htb/ - easily cracked password
+
+#### Password Hygiene
+- Host: http://goodgames.htb/_  
+- What: easily cracked password
 ```
 Database: main
 Table: user
