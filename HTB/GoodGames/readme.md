@@ -958,6 +958,11 @@ Modifying the `id` command to be `ip a`, we get the following:
     inet 172.19.0.2/16 brd 172.19.255.255 scope global eth0
        valid_lft forever preferred_lft forever
 ```
+Modifying the `id` command to be `ip r`, we get the following:
+```
+default via 172.19.0.1 dev eth0 
+172.19.0.0/16 dev eth0 proto kernel scope link src 172.19.0.2
+```
 Modifying the `id` command to be `ls -la`, we get the following:
 ```
 drwxr-xr-x 1 root root 4096 Nov  5  2021 .
