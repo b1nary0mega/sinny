@@ -1,4 +1,4 @@
-#HTB - Good Games
+# HTB - Good Games
 Keywords: #python #docker #weak-pwd
 
 ## Notes
@@ -875,3 +875,6 @@ Table: user
 +----+----------+---------------------+----------------------------------+--------------------+
 ```
 
+#### SSTI Found
+
+http://internal-administration.goodgames.htb/settings - profile input returns "49" when `{{7*7}}` is entered into the name field.
