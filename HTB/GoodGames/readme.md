@@ -1098,3 +1098,147 @@ curl -i -s -k -X $'POST' \
 Catch the shell and enjoy!
 ![Catch the shell and enjoy](https://user-images.githubusercontent.com/1907220/209875015-a2941baa-f902-4d62-a895-e9dc00f38ae6.png)
 
+#### Docker Checks
+```
+root@3a453ab39d3d:/backend# ./cdk_linux_amd64 evaluate
+./cdk_linux_amd64 evaluate
+CDK (Container DucK)
+CDK Version(GitCommit): 5b28ff76a301fe6cb90baf6bd186923b6fb30276
+Zero-dependency cloudnative k8s/docker/serverless penetration toolkit by cdxy & neargle
+Find tutorial, configuration and use-case in https://github.com/cdk-team/CDK/
+
+[  Information Gathering - System Info  ]
+2022/12/28 22:29:56 current dir: /backend
+2022/12/28 22:29:56 current user: root uid: 0 gid: 0 home: /root
+2022/12/28 22:29:56 hostname: 3a453ab39d3d
+2022/12/28 22:29:56 debian debian 9.6 kernel: 4.19.0-18-amd64
+2022/12/28 22:29:56 Setuid files found:
+        /usr/bin/chfn
+        /usr/bin/chsh
+        /usr/bin/gpasswd
+        /usr/bin/newgrp
+        /usr/bin/passwd
+        /bin/mount
+        /bin/ping
+        /bin/su
+        /bin/umount
+
+[  Information Gathering - Services  ]
+2022/12/28 22:29:56 service found in process:
+        1       0       python3
+
+[  Information Gathering - Commands and Capabilities  ]
+2022/12/28 22:29:56 available commands:
+        curl,wget,find,ps,python,python3,apt,dpkg,ssh,git,svn,mount,fdisk,gcc,g++,make,base64,python2,python2.7,perl
+2022/12/28 22:29:56 Capabilities hex of Caps(CapInh|CapPrm|CapEff|CapBnd|CapAmb):                                                                                                                                                                          
+        CapInh: 00000000a80425fb
+        CapPrm: 00000000a80425fb
+        CapEff: 00000000a80425fb
+        CapBnd: 00000000a80425fb
+        CapAmb: 0000000000000000
+        Cap decode: 0x00000000a80425fb = CAP_CHOWN,CAP_DAC_OVERRIDE,CAP_FOWNER,CAP_FSETID,CAP_KILL,CAP_SETGID,CAP_SETUID,CAP_SETPCAP,CAP_NET_BIND_SERVICE,CAP_NET_RAW,CAP_SYS_CHROOT,CAP_MKNOD,CAP_AUDIT_WRITE,CAP_SETFCAP
+[*] Maybe you can exploit the Capabilities below:
+
+[  Information Gathering - Mounts  ]
+0:43 / / rw,relatime - overlay overlay rw,lowerdir=/var/lib/docker/overlay2/l/BMOEKLXDA4EFIXZ4O4AP7LYEVQ:/var/lib/docker/overlay2/l/E365MWZN2IXKTIAKIBBWWUOADT:/var/lib/docker/overlay2/l/ZN44ERHF3TPZW7GPHTZDOBQAD5:/var/lib/docker/overlay2/l/BMI22QFRJIU
+AWSWNAECLQ35DQS:/var/lib/docker/overlay2/l/6KXJS2GP5OWZY2WMA64DMEN37D:/var/lib/docker/overlay2/l/FE6JM56VMBUSHKLHKZN4M7BBF7:/var/lib/docker/overlay2/l/MSWSF5XCNMHEUPP5YFFRZSUOOO:/var/lib/docker/overlay2/l/3VLCE4GRHDQSBFCRABM7ZL2II6:/var/lib/docker/ove
+rlay2/l/G4RUINBGG77H7HZT5VA3U3QNM3:/var/lib/docker/overlay2/l/3UIIMRKYCPEGS4LCPXEJLYRETY:/var/lib/docker/overlay2/l/U54SKFNVA3CXQLYRADDSJ7NRPN:/var/lib/docker/overlay2/l/UIMFGMQODUTR2562B2YJIOUNHL:/var/lib/docker/overlay2/l/HEPVGMWCYIV7JX7KCI6WZ4QYV5,
+upperdir=/var/lib/docker/overlay2/4bc2f5ca1b7adeaec264b5690fbc99dfe8c555f7bc8c9ac661cef6a99e859623/diff,workdir=/var/lib/docker/overlay2/4bc2f5ca1b7adeaec264b5690fbc99dfe8c555f7bc8c9ac661cef6a99e859623/work
+0:46 / /proc rw,nosuid,nodev,noexec,relatime - proc proc rw
+0:47 / /dev rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755
+0:48 / /dev/pts rw,nosuid,noexec,relatime - devpts devpts rw,gid=5,mode=620,ptmxmode=666
+0:49 / /sys ro,nosuid,nodev,noexec,relatime - sysfs sysfs ro
+0:50 / /sys/fs/cgroup rw,nosuid,nodev,noexec,relatime - tmpfs tmpfs rw,mode=755
+0:26 /docker/3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f /sys/fs/cgroup/systemd ro,nosuid,nodev,noexec,relatime - cgroup cgroup rw,xattr,name=systemd
+0:29 /docker/3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f /sys/fs/cgroup/pids ro,nosuid,nodev,noexec,relatime - cgroup cgroup rw,pids
+0:30 /docker/3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f /sys/fs/cgroup/memory ro,nosuid,nodev,noexec,relatime - cgroup cgroup rw,memory
+0:31 /docker/3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f /sys/fs/cgroup/cpuset ro,nosuid,nodev,noexec,relatime - cgroup cgroup rw,cpuset
+0:32 /docker/3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f /sys/fs/cgroup/freezer ro,nosuid,nodev,noexec,relatime - cgroup cgroup rw,freezer
+0:33 /docker/3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f /sys/fs/cgroup/perf_event ro,nosuid,nodev,noexec,relatime - cgroup cgroup rw,perf_event
+0:34 /docker/3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f /sys/fs/cgroup/cpu,cpuacct ro,nosuid,nodev,noexec,relatime - cgroup cgroup rw,cpu,cpuacct
+0:35 /docker/3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f /sys/fs/cgroup/net_cls,net_prio ro,nosuid,nodev,noexec,relatime - cgroup cgroup rw,net_cls,net_prio
+0:36 / /sys/fs/cgroup/rdma ro,nosuid,nodev,noexec,relatime - cgroup cgroup rw,rdma
+0:37 /docker/3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f /sys/fs/cgroup/blkio ro,nosuid,nodev,noexec,relatime - cgroup cgroup rw,blkio
+0:38 /docker/3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f /sys/fs/cgroup/devices ro,nosuid,nodev,noexec,relatime - cgroup cgroup rw,devices
+0:45 / /dev/mqueue rw,nosuid,nodev,noexec,relatime - mqueue mqueue rw
+8:1 /home/augustus /home/augustus rw,relatime - ext4 /dev/sda1 rw,errors=remount-ro
+8:1 /var/lib/docker/containers/3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f/resolv.conf /etc/resolv.conf rw,relatime - ext4 /dev/sda1 rw,errors=remount-ro
+8:1 /var/lib/docker/containers/3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f/hostname /etc/hostname rw,relatime - ext4 /dev/sda1 rw,errors=remount-ro
+8:1 /var/lib/docker/containers/3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f/hosts /etc/hosts rw,relatime - ext4 /dev/sda1 rw,errors=remount-ro
+0:44 / /dev/shm rw,nosuid,nodev,noexec,relatime - tmpfs shm rw,size=65536k
+0:46 /bus /proc/bus ro,nosuid,nodev,noexec,relatime - proc proc rw
+0:46 /fs /proc/fs ro,nosuid,nodev,noexec,relatime - proc proc rw
+0:46 /irq /proc/irq ro,nosuid,nodev,noexec,relatime - proc proc rw
+0:46 /sys /proc/sys ro,nosuid,nodev,noexec,relatime - proc proc rw
+0:46 /sysrq-trigger /proc/sysrq-trigger ro,nosuid,nodev,noexec,relatime - proc proc rw
+0:51 / /proc/acpi ro,relatime - tmpfs tmpfs ro
+0:47 /null /proc/kcore rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755
+0:47 /null /proc/keys rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755
+0:47 /null /proc/timer_list rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755
+0:47 /null /proc/sched_debug rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755
+0:52 / /sys/firmware ro,relatime - tmpfs tmpfs ro
+
+[  Information Gathering - Net Namespace  ]
+        container net namespace isolated.
+
+[  Information Gathering - Sysctl Variables  ]
+2022/12/28 22:29:56 net.ipv4.conf.all.route_localnet = 0
+
+[  Information Gathering - DNS-Based Service Discovery  ]
+[  Discovery - K8s API Server  ]                                                                                                                                                                                                                           
+2022/12/28 22:30:16 checking if api-server allows system:anonymous request.                                                                                                                                                                                
+err found while searching local K8s apiserver addr.:                                                                                                                                                                                                       
+err: cannot find kubernetes api host in ENV                                                                                                                                                                                                                
+        api-server forbids anonymous request.                                                                                                                                                                                                              
+        response:                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                           
+[  Discovery - K8s Service Account  ]                                                                                                                                                                                                                      
+load K8s service account token error.:                                                                                                                                                                                                                     
+open /var/run/secrets/kubernetes.io/serviceaccount/token: no such file or directory                                                                                                                                                                        
+                                                                                                                                                                                                                                                           
+[  Discovery - Cloud Provider Metadata API  ]                                                                                                                                                                                                              
+2022/12/28 22:30:17 failed to dial Alibaba Cloud API.
+2022/12/28 22:30:19 failed to dial Azure API.
+2022/12/28 22:30:20 failed to dial Google Cloud API.
+2022/12/28 22:30:21 failed to dial Tencent Cloud API.
+2022/12/28 22:30:23 failed to dial OpenStack API.
+2022/12/28 22:30:24 failed to dial Amazon Web Services (AWS) API.
+2022/12/28 22:30:25 failed to dial ucloud API.
+
+[  Exploit Pre - Kernel Exploits  ]
+2022/12/28 22:30:25 refer: https://github.com/mzet-/linux-exploit-suggester
+[+] [CVE-2019-13272] PTRACE_TRACEME
+
+   Details: https://bugs.chromium.org/p/project-zero/issues/detail?id=1903
+   Exposure: probable
+   Tags: ubuntu=16.04{kernel:4.15.0-*},ubuntu=18.04{kernel:4.15.0-*},[ debian=9 ]{kernel:4.9.0-*},debian=10{kernel:4.19.0-*},fedora=30{kernel:5.0.9-*}
+   Download URL: https://github.com/offensive-security/exploitdb-bin-sploits/raw/master/bin-sploits/47133.zip
+   ext-url: https://raw.githubusercontent.com/bcoles/kernel-exploits/master/CVE-2019-13272/poc.c
+   Comments: Requires an active PolKit agent.
+
+[+] [CVE-2021-27365] linux-iscsi
+
+   Details: https://blog.grimm-co.com/2021/03/new-old-bugs-in-linux-kernel.html
+   Exposure: less probable
+   Tags: RHEL=8
+   Download URL: https://codeload.github.com/grimm-co/NotQuite0DayFriday/zip/trunk
+   Comments: CONFIG_SLAB_FREELIST_HARDENED must not be enabled
+
+[+] [CVE-2021-22555] Netfilter heap out-of-bounds write
+
+   Details: https://google.github.io/security-research/pocs/linux/cve-2021-22555/writeup.html
+   Exposure: less probable
+   Tags: ubuntu=20.04{kernel:5.8.0-*}
+   Download URL: https://raw.githubusercontent.com/google/security-research/master/pocs/linux/cve-2021-22555/exploit.c
+   ext-url: https://raw.githubusercontent.com/bcoles/kernel-exploits/master/CVE-2021-22555/exploit.c
+   Comments: ip_tables kernel module must be loaded
+
+[+] [CVE-2017-1000366,CVE-2017-1000379] linux_ldso_hwcap_64
+
+   Details: https://www.qualys.com/2017/06/19/stack-clash/stack-clash.txt
+   Exposure: less probable
+   Tags: debian=7.7|8.5|9.0,ubuntu=14.04.2|16.04.2|17.04,fedora=22|25,centos=7.3.1611
+   Download URL: https://www.qualys.com/2017/06/19/stack-clash/linux_ldso_hwcap_64.c
+   Comments: Uses "Stack Clash" technique, works against most SUID-root binaries
+
+```
