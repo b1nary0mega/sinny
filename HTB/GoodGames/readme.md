@@ -1242,3 +1242,39 @@ open /var/run/secrets/kubernetes.io/serviceaccount/token: no such file or direct
    Comments: Uses "Stack Clash" technique, works against most SUID-root binaries
 
 ```
+Attempted auto-exploit
+```
+root@3a453ab39d3d:/backend# ./cdk_linux_amd64 auto-escape pwd
+./cdk_linux_amd64 auto-escape pwd
+
+[Auto Escape - Privileged Container]
+2022/12/28 22:35:16 Capabilities hex of Caps(CapInh|CapPrm|CapEff|CapBnd|CapAmb):
+        CapInh: 00000000a80425fb
+        CapPrm: 00000000a80425fb
+        CapEff: 00000000a80425fb
+        CapBnd: 00000000a80425fb
+        CapAmb: 0000000000000000
+        Cap decode: 0x00000000a80425fb = CAP_CHOWN,CAP_DAC_OVERRIDE,CAP_FOWNER,CAP_FSETID,CAP_KILL,CAP_SETGID,CAP_SETUID,CAP_SETPCAP,CAP_NET_BIND_SERVICE,CAP_NET_RAW,CAP_SYS_CHROOT,CAP_MKNOD,CAP_AUDIT_WRITE,CAP_SETFCAP
+[*] Maybe you can exploit the Capabilities below:
+2022/12/28 22:35:16 not privileged container.
+
+[Auto Escape - Shared Net Namespace]
+2022/12/28 22:35:16 Cannot find vulnerable containerd-shim socket.
+2022/12/28 22:35:16 exploit failed.
+
+[Auto Escape - docker.sock]
+2022/12/28 22:35:16 err found while stat docker.sock path.:
+stat /var/run/docker.sock: no such file or directory
+2022/12/28 22:35:16 exploit failed
+
+[Auto Escape - K8s API Server]
+2022/12/28 22:35:16 checking if api-server allows system:anonymous request.
+err found while searching local K8s apiserver addr.:
+err: cannot find kubernetes api host in ENV
+        api-server forbids anonymous request.
+        response:
+load K8s service account token error.:
+open /var/run/secrets/kubernetes.io/serviceaccount/token: no such file or directory
+2022/12/28 22:35:16 exploit failed
+2022/12/28 22:35:16 all exploits are finished, auto exploit failed.
+```
