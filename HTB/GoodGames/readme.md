@@ -1096,5 +1096,4 @@ curl -i -s -k -X $'POST' \
     $'http://internal-administration.goodgames.htb/settings'
 ```
 
-Catch the shell and enjoy!
-
+!{Catch the shell and enjoy!}(/loot/screenshots/2022-12-28_16-35-catch_a_falling_Shell.png)
