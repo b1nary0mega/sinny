@@ -360,7 +360,8 @@ WLD      GET         -         -         - Wildcard response is static; auto-fil
 
 ```
 
-### gobuster
+### ffuf
+
 ```
 [ 12:49PM ]  [ ops@redteam:~/Documents/PT/HTB-goodgames/data ]                                                                                                                       
  $ ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-medium-words-lowercase.txt -u http://10.10.11.130/FUZZ -fs 9265 -c -v | tee ffuf-raft_med_low.txt                          
@@ -428,6 +429,51 @@ ________________________________________________
     * FUZZ: password-reset
 
 :: Progress: [56293/56293] :: Job [1/1] :: 179 req/sec :: Duration: [0:03:33] :: Errors: 0 ::
+```
+**internal-administration.goodgames.htb**
+```
+$ ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-medium-words-lowercase.txt -u http://internal-administration.goodgames.htb/FUZZ -fs 6672 -c -v
+
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.5.0 Kali Exclusive <3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://internal-administration.goodgames.htb/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/raft-medium-words-lowercase.txt
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405,500
+ :: Filter           : Response size: 6672
+________________________________________________
+
+[Status: 200, Size: 13603, Words: 3399, Lines: 211, Duration: 100ms]
+| URL | http://internal-administration.goodgames.htb/login
+    * FUZZ: login
+
+[Status: 302, Size: 218, Words: 21, Lines: 4, Duration: 183ms]
+| URL | http://internal-administration.goodgames.htb/logout
+| --> | http://internal-administration.goodgames.htb/login
+    * FUZZ: logout
+
+[Status: 302, Size: 218, Words: 21, Lines: 4, Duration: 185ms]
+| URL | http://internal-administration.goodgames.htb/.
+| --> | http://internal-administration.goodgames.htb/login
+    * FUZZ: .
+
+[Status: 403, Size: 302, Words: 20, Lines: 10, Duration: 42ms]
+| URL | http://internal-administration.goodgames.htb/server-status
+    * FUZZ: server-status
+
+:: Progress: [56293/56293] :: Job [1/1] :: 105 req/sec :: Duration: [0:08:25] :: Errors: 0 ::
 ```
 
 ### Registration
@@ -875,6 +921,8 @@ Table: user
 +----+----------+---------------------+----------------------------------+--------------------+
 ```
 
+
 #### SSTI Found
 
 http://internal-administration.goodgames.htb/settings - profile input returns "49" when `{{7*7}}` is entered into the name field.
+
