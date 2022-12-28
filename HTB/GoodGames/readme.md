@@ -124,6 +124,18 @@ Nmap done: 1 IP address (1 host up) scanned in 9.04 seconds
   - Hammer.js 2.0.7
   - jQuery 3.3.1
   - Moment.js 2.22.1
+- Flask - Volt Dashboard (via SSTI `cat requirements.txt`)
+  - flask==2.0.1
+  - flask_login==0.5.0
+  - flask_migrate==3.1.0
+  - flask_wtf==0.15.1
+  - flask_sqlalchemy==2.5.1
+  - sqlalchemy==1.4.23
+  - email_validator==1.1.3
+  - python-decouple==3.4
+  - gunicorn==20.1.0
+  - jinja2==3.0.1
+  - flask-restx==0.5.1
 
 ### gobusting
 
@@ -971,7 +983,20 @@ drwxr-xr-x 1 root root 4096 Nov  5  2021 ..
 drwxr-xr-x 1 root root 4096 Nov  3  2021 project
 -rw-r--r-- 1 root root  208 Nov  3  2021 requirements.txt
 ```
-
+Modifying the `id` command to be `cat requirements.txt`, we get the following:
+```
+flask==2.0.1
+flask_login==0.5.0
+flask_migrate==3.1.0
+flask_wtf==0.15.1
+flask_sqlalchemy==2.5.1
+sqlalchemy==1.4.23
+email_validator==1.1.3
+python-decouple==3.4
+gunicorn==20.1.0
+jinja2==3.0.1
+flask-restx==0.5.1
+```
 Modifying the `id` command to be `pwd`, we get the following:
 ```
 /backend
