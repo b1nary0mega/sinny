@@ -12,10 +12,15 @@ _current DB user_: 'main_admin@localhost'
 _current DB user is DBA_: False
 
 ## To-Do
-[ ] Determine where cracked login/password can be used
-- does this provide any additional exposure/functions/features?
+[ ] Continue enumeration of inside docker.
+ - IP address is /16
+ - augustus is mapped from host
 
 ## Done
+### Password Reuse
+[x] Determine where cracked login/password can be used
+- does this provide any additional exposure/functions/features?
+
 ### Input Validation
 [x] Check for input validation at [signup](http://goodgames.htb/signup)
 - --data "email=*&name=*&password=*&password2=*"
@@ -1278,3 +1283,7 @@ open /var/run/secrets/kubernetes.io/serviceaccount/token: no such file or direct
 2022/12/28 22:35:16 exploit failed
 2022/12/28 22:35:16 all exploits are finished, auto exploit failed.
 ```
+**Upgrade the shell**
+https://zweilosec.github.io/posts/upgrade-linux-shell/
+
+Looking at mounts, augustus' home directory is mapped from the host system.
