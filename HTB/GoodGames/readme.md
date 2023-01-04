@@ -1485,3 +1485,19 @@ root      5629  0.0  0.0      0     0 ?        I    21:09   0:00 [kworker/0:1-cg
 augustus  5639  0.0  0.0   6176   648 pts/3    S+   21:23   0:00 grep root
 ```
 
+SUID Binarys
+```
+augustus@GoodGames:~$ find / -perm -u=s -type f 2>/dev/null
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/openssh/ssh-keysign
+/usr/bin/gpasswd
+/usr/bin/chfn
+/usr/bin/newgrp
+/usr/bin/fusermount
+/usr/bin/umount
+/usr/bin/passwd
+/usr/bin/chsh
+/usr/bin/mount
+/usr/bin/su
+```
+Nothing identified via [GTFOBins](https://gtfobins.github.io/)
