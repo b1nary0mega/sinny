@@ -1501,3 +1501,60 @@ augustus@GoodGames:~$ find / -perm -u=s -type f 2>/dev/null
 /usr/bin/su
 ```
 Nothing identified via [GTFOBins](https://gtfobins.github.io/)
+
+
+Networking Details
+```
+augustus@GoodGames:~$ ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:50:56:b9:28:07 brd ff:ff:ff:ff:ff:ff
+    inet 10.10.11.130/24 brd 10.10.11.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 dead:beef::250:56ff:feb9:2807/64 scope global dynamic mngtmpaddr 
+       valid_lft 86392sec preferred_lft 14392sec
+    inet6 fe80::250:56ff:feb9:2807/64 scope link 
+       valid_lft forever preferred_lft forever
+3: br-99993f3f3b6b: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 02:42:38:cb:fa:59 brd ff:ff:ff:ff:ff:ff
+    inet 172.19.0.1/16 brd 172.19.255.255 scope global br-99993f3f3b6b
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:38ff:fecb:fa59/64 scope link 
+       valid_lft forever preferred_lft forever
+4: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 02:42:a2:f3:b2:c5 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+6: vethbc80a3e@if5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br-99993f3f3b6b state UP group default 
+    link/ether 5a:79:8d:6e:d3:d7 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet6 fe80::5879:8dff:fe6e:d3d7/64 scope link 
+       valid_lft forever preferred_lft forever
+
+augustus@GoodGames:~$ ip r
+default via 10.10.10.2 dev eth0 onlink 
+10.10.11.0/24 dev eth0 proto kernel scope link src 10.10.11.130 
+172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown 
+172.19.0.0/16 dev br-99993f3f3b6b proto kernel scope link src 172.19.0.1 
+
+augustus@GoodGames:~$ netstat -ant
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 127.0.0.1:8085          0.0.0.0:*               LISTEN     
+tcp        0      0 172.19.0.1:22           0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:8000          0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:33060         0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN     
+tcp        0      0 172.19.0.1:33442        172.19.0.2:8085         FIN_WAIT2  
+tcp        0      0 172.19.0.1:22           172.19.0.2:57686        ESTABLISHED
+tcp        0    206 10.10.11.130:33136      10.10.14.4:8888         ESTABLISHED
+tcp        0      0 10.10.11.130:33644      10.10.14.4:9002         ESTABLISHED
+tcp        0      0 172.19.0.1:33360        172.19.0.2:8085         FIN_WAIT2  
+tcp        0      0 172.19.0.1:45100        172.19.0.2:8085         FIN_WAIT2  
+tcp        0      0 172.19.0.1:22           172.19.0.2:57600        ESTABLISHED
+tcp6       0      0 :::80                   :::*                    LISTEN
+```
