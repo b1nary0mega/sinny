@@ -1335,3 +1335,35 @@ Further enumeration of the host revealed there was a listening port [22] between
 Once that was done, for easier enumeration and control, the box was beaconed with a sliver implant.
 
 ![](./loot/screenshots/2023-01-04_14-30-SliverC2.png)
+
+## OG Host Recon
+```
+sliver (REAL_DYNAMO) > shell
+
+? This action is bad OPSEC, are you an adult? Yes
+
+[*] Wait approximately 10 seconds after exit, and press <enter> to continue
+[*] Opening shell tunnel (EOF to exit) ...
+
+[*] Started remote shell with pid 5578
+```
+
+The first piece of information we will need to enumerate is the operating system's information.
+```
+augustus@GoodGames:~$ cat /etc/*-release
+PRETTY_NAME="Debian GNU/Linux 11 (bullseye)"
+NAME="Debian GNU/Linux"
+VERSION_ID="11"
+VERSION="11 (bullseye)"
+VERSION_CODENAME=bullseye
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+```
+
+We will also need the kernel version and operating system architecture. Useful in determining vulnerabilities and finding kernel exploits.
+```
+augustus@GoodGames:~$ uname -a
+Linux GoodGames 4.19.0-18-amd64 #1 SMP Debian 4.19.208-1 (2021-09-29) x86_64 GNU/Linux
+```
