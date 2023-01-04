@@ -1327,3 +1327,11 @@ tmpfs on /proc/sched_debug type tmpfs (rw,nosuid,size=65536k,mode=755)
 tmpfs on /sys/firmware type tmpfs (ro,relatime)
 root@3a453ab39d3d:~/.ssh# 
 ```
+
+# Command and Control
+## OG host beaconed
+Further enumeration of the host revealed there was a listening port [22] between the docker image and host. It was possible SSH in with host-mounted user directories account, 'augustus', using the previously cracked password 'superadministrator'.
+
+Once that was done, for easier enumeration and control, the box was beaconed with a sliver implant.
+
+![](./loot/screenshots/2023-01-04_14-30-SliverC2.png)
