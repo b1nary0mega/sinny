@@ -1344,6 +1344,36 @@ tmpfs on /sys/firmware type tmpfs (ro,relatime)
 root@3a453ab39d3d:~/.ssh# 
 ```
 
+Find writeable directories on host ('find / -type d \( -perm -g+w -or -perm -o+w \) -exec ls -adl {} \;')
+```
+drwxrwsr-x 1 root staff 4096 Nov 12  2018 /usr/local
+drwxrwsr-x 1 root staff 4096 Nov 16  2018 /usr/local/lib
+drwxrwsr-x 3 root staff 4096 Nov 16  2018 /usr/local/lib/python3.5
+drwxrwsr-x 2 root staff 4096 Nov 16  2018 /usr/local/lib/python3.5/dist-packages
+drwxrwsr-x 4 root staff 4096 Nov 16  2018 /usr/local/lib/python2.7
+drwxrwsr-x 2 root staff 4096 Nov 16  2018 /usr/local/lib/python2.7/site-packages
+drwxrwsr-x 2 root staff 4096 Nov 16  2018 /usr/local/lib/python2.7/dist-packages
+drwxrwsr-x 2 root staff 4096 Nov 12  2018 /usr/local/etc
+drwxrwsr-x 1 root staff 4096 Feb 18  2022 /usr/local/share
+drwxrwsr-x 1 root staff 4096 Feb 18  2022 /usr/local/share/man
+drwxrwsr-x 2 root staff 4096 Nov 16  2018 /usr/local/share/fonts
+drwxrwsr-x 2 root staff 4096 Nov 16  2018 /usr/local/share/ca-certificates
+drwxrwsr-x 2 root staff 4096 Nov 12  2018 /usr/local/games
+drwxrwsr-x 2 root staff 4096 Nov 12  2018 /usr/local/src
+drwxrwsr-x 2 root staff 4096 Nov 12  2018 /usr/local/sbin
+drwxrwsr-x 1 root staff 4096 Nov 16  2018 /usr/local/include
+drwxrwsr-x 1 root staff 4096 Nov  5  2021 /usr/local/bin
+drwxrwsr-x 2 root staff 4096 Oct 20  2018 /var/local
+drwxrwsr-x 2 root mail 4096 Nov 12  2018 /var/mail
+drwxrwxrwt 2 root root 4096 Oct 20  2018 /var/tmp
+drwxrwxrwt 2 root root 40 Jan  4 13:52 /dev/shm
+drwxrwxrwt 2 root root 40 Jan  4 13:52 /dev/mqueue
+drwxrwxrwt 2 root root 40 Jan  4 13:52 /proc/acpi
+drwxrwxrwt 2 root root 4096 Nov 12  2018 /run/lock
+drwxrwxrwt 2 root root 40 Jan  4 13:52 /sys/firmware
+drwxrwxrwt 1 root root 4096 Nov  5  2021 /tmp
+```
+
 # Command and Control
 ## OG host beaconed
 Further enumeration of the host revealed there was a listening port [22] between the docker image and host. It was possible SSH in with host-mounted user directories account, 'augustus', using the previously cracked password 'superadministrator'.
