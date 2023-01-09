@@ -1595,3 +1595,35 @@ tcp        0      0 172.19.0.1:45100        172.19.0.2:8085         FIN_WAIT2
 tcp        0      0 172.19.0.1:22           172.19.0.2:57600        ESTABLISHED
 tcp6       0      0 :::80                   :::*                    LISTEN
 ```
+
+### linpeas
+The following interesting entry was found in the linpeas network enumeration; **experimental-search** is new!
+```
+══════════════════════════════╣ Network Information ╠══════════════════════════════
+                              ╚═════════════════════╝
+╔══════════╣ Hostname, hosts and DNS
+GoodGames
+127.0.0.1	localhost goodgames.htb experimental-search.goodgames.htb
+127.0.1.1	GoodGames
+
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+nameserver 1.1.1.1
+nameserver 8.8.8.8
+
+```
+resulted in adding the following to /etc/hosts:
+```
+127.0.0.1       localhost
+127.0.1.1       redteam
+10.10.11.130    goodgames.htb
+10.10.11.130    internal-administration.goodgames.htb
+10.10.11.130    experimental-search.goodgames.htb
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+```
+This appears to land you at the initial landing page of googdame.htb.
