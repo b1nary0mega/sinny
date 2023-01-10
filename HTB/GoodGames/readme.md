@@ -112,6 +112,13 @@ Table: user
 +----------+--------------------+
 ```
 
+#### Password in Clear-Text
+There is a python file located at `/var/www/goodgames/main/main.py` which contains cleartext credentials for connecting to the MySQL Server.
+
+- Host: goodgames.htb
+
+![](./loot/screenshots/2023-01-09_22-43--hardcoded_pwd.png)
+
 ## Enumeration
 
 ### nmaps
