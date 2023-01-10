@@ -12,6 +12,7 @@ _current DB user_: 'main_admin@localhost'
 _current DB user is DBA_: False
 
 ### Passwords
+```
 +------------------------+---------------------------+----------------------+
 | login                  | password                  | where                |
 +------------------------+---------------------------+----------------------+
@@ -20,6 +21,7 @@ _current DB user is DBA_: False
 | augustus               | superadministrator        | ssh (docker -> host) |
 | main_admin             | C4n7_Cr4cK_7H1S_pasSw0Rd! | mysql (host)         |
 +------------------------+---------------------------+----------------------+
+```
 
 ## To-Do
 ### Enumeration
@@ -1623,24 +1625,28 @@ augustus 22894  0.0  0.0   5540   784 pts/3    S+   02:08   0:00 more
 ## User Enumeration
 
 > whoami
+
 '''
 augustus@GoodGames:~$ whoami
 augustus
 '''
 
 > id
+
 '''
 augustus@GoodGames:~$ id
 uid=1000(augustus) gid=1000(augustus) groups=1000(augustus)
 '''
 
 > sudo -l
+
 ```
 augustus@GoodGames:~$ sudo -l
 bash: sudo: command not found
 ```
 
 > cat /etc/passwd
+
 ```
 augustus@GoodGames:~$ cat /etc/passwd
 root:x:0:0:root:/root:/bin/bash
@@ -1673,12 +1679,14 @@ mysql:x:106:113:MySQL Server,,,:/var/lib/mysql:/bin/false
 ```
 
 > cat /etc/shadow
+
 ```
 augustus@GoodGames:~$ cat /etc/shadow
 cat: /etc/shadow: Permission denied
 ```
 
 > cat /etc/group
+
 ```
 augustus@GoodGames:~$ cat /etc/group
 root:x:0:    
@@ -1741,6 +1749,7 @@ docker:x:114:
 ## Network Enumeration
 
 > ip a
+
 ```
 augustus@GoodGames:~$ ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
@@ -1774,6 +1783,7 @@ augustus@GoodGames:~$ ip a
 ```
 
 > ip r
+
 ```
 augustus@GoodGames:~$ ip r
 default via 10.10.10.2 dev eth0 onlink 
@@ -1783,6 +1793,7 @@ default via 10.10.10.2 dev eth0 onlink
 ```
 
 > ip neigh
+
 ```
 augustus@GoodGames:~$ ip neigh
 172.19.0.2 dev br-99993f3f3b6b lladdr 02:42:ac:13:00:02 STALE
@@ -1791,6 +1802,7 @@ fe80::250:56ff:feb9:17d8 dev eth0 lladdr 00:50:56:b9:17:d8 router STALE
 ```
 
 > netstat -ano
+
 ```
 augustus@GoodGames:~$ netstat -ano                                                                                                                                                                      
 Active Internet connections (servers and established)                                                                                                                                                   
@@ -1919,6 +1931,7 @@ unix  3      [ ]         STREAM     CONNECTED     143768   /run/systemd/journal/
 ## Password Hunting
 
 > grep --color=auto -rnw '/' -ie "PASSWORD=" --color=always 2> /dev/null
+
 ```
 ...
 /var/www/goodgames/main/main.py:12:        connector = mysql.connector.connect(user='main_admin', password='C4n7_Cr4cK_7H1S_pasSw0Rd!', host='127.0.0.1', database='main')
