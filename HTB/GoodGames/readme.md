@@ -33,7 +33,7 @@ _current DB user is DBA_: False
 ### Enumeration
 [x] Continue enumeration of inside docker.
  - IP address is /16
-   - pingsweep 172.19.0.[1-255]; make sure to upgrade shell first, or shit will get weird.
+   - pingsweep 172.19.0.[1-255]; make sure to upgrade shell first, or things get weird.
  - augustus is mapped from host
 
 ### Password Reuse
