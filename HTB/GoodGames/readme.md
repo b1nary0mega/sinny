@@ -26,12 +26,16 @@ _current DB user is DBA_: False
 ## To-Do
 ### Enumeration
 [_] Continue enumeration of linux host
- - Debian GNU/Linux 11 (bullseye)
- - Linux GoodGames 4.19.0-18-amd64 #1 SMP Debian 4.19.208-1 (2021-09-29) x86_64 GNU/Linux
 
 ## Done
 ### Enumeration
-[x] Continue enumeration of inside docker.
+[x] Enumeration of linux host
+ - SUDO is not installed
+ - polkit vuln? = NO
+ - mysql - doesn't appear to be; not running in root context
+ - web server - files and directories lack write access
+ 
+[x] Enumeration from inside docker.
  - IP address is /16
    - pingsweep 172.19.0.[1-255]; make sure to upgrade shell first, or things get weird.
  - augustus is mapped from host
