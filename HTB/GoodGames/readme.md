@@ -25,12 +25,11 @@ _current DB user is DBA_: False
 +------------------------+---------------------------+----------------------+
 ```
 
-## To-Do
-### Enumeration
+## Tasks
+### To-Do
 [_] Continue enumeration of linux host
 
-## Done
-### Enumeration
+### Done
 [x] Enumeration of linux host
  - SUDO is not installed
  - polkit vuln? = NO
@@ -42,11 +41,9 @@ _current DB user is DBA_: False
    - pingsweep 172.19.0.[1-255]; make sure to upgrade shell first, or things get weird.
  - augustus is mapped from host
 
-### Password Reuse
 [x] Determine where cracked login/password can be used
 - does this provide any additional exposure/functions/features?
 
-### Input Validation
 [x] Check for input validation at [signup](http://goodgames.htb/signup)
 - --data "email=*&name=*&password=*&password2=*"
 
@@ -59,7 +56,6 @@ _current DB user is DBA_: False
 [x] Check for input validation at [coming-soon](http://goodgames.htb/coming-soon)
 - IGNORED - page performs a GET request to non-scoped server - "nkdev.us11.list-manage.com"
 
-### Cracking
 [x] Attempt to crack obtained hases from SQLi
 - initial attempt with rockyou.txt; no clear-text passwords found.
 
@@ -124,6 +120,16 @@ There is a python file located at `/var/www/goodgames/main/main.py` which contai
 - Host: goodgames.htb
 
 ![](./loot/screenshots/2023-01-09_22-43--hardcoded_pwd.png)
+
+## Good Practicies
+- MySQL account for goodgames.htb was not running as root or DBA
+- SSH was not exposed outside of host
+- SUDO was not available on host
+
+## Recommendations
+- Validate user input fields
+- Stronger password policy
+- Remove hard-coded passwords
 
 ## Enumeration
 
