@@ -1988,7 +1988,7 @@ ff02::2 ip6-allrouters
 This appears to land you at the initial landing page of googdame.htb.
 
 # The Downfall
-Admittedly, I missed this last one and had to 'phone a friend'. It kills me as I should have thought about it, knowing it was already in both places.
+Admittedly, I missed this last one and had to 'phone a friend'. It kills me as I should have thought about it, knowing I was already in both places.
 
 _Short Answer:_ Abuse the fact that you have access to a folder on the host, as root in docker via the docker (`SUID; bash -p`)
 
