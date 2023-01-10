@@ -1631,17 +1631,17 @@ augustus 22894  0.0  0.0   5540   784 pts/3    S+   02:08   0:00 more
 
 > whoami
 
-'''
+```
 augustus@GoodGames:~$ whoami
 augustus
-'''
+```
 
 > id
 
-'''
+```
 augustus@GoodGames:~$ id
 uid=1000(augustus) gid=1000(augustus) groups=1000(augustus)
-'''
+```
 
 > sudo -l
 
