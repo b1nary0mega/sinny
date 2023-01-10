@@ -1,5 +1,7 @@
 # HTB - Good Games
-Keywords: #python #docker #weak-pwd
+Keywords: #python #docker #weak-pwd #SUID
+
+📕 - Solved (with help) - 10-Jan-23 00:10 - 📕
 
 ## Notes
 
