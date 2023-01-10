@@ -1417,9 +1417,9 @@ sliver (REAL_DYNAMO) > shell
 
 > uname -a
  
-'''
+```
 Linux GoodGames 4.19.0-18-amd64 #1 SMP Debian 4.19.208-1 (2021-09-29) x86_64 GNU/Linux
-'''
+```
 
 > cat /proc/version
  
