@@ -1416,21 +1416,25 @@ sliver (REAL_DYNAMO) > shell
 ## System Enumeration
 
 > uname -a
+ 
 '''
 Linux GoodGames 4.19.0-18-amd64 #1 SMP Debian 4.19.208-1 (2021-09-29) x86_64 GNU/Linux
 '''
 
 > cat /proc/version
+ 
 ```
 Linux version 4.19.0-18-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.208-1 (2021-09-29)
 ```
 
 > cat /etc/issue
+ 
 ```
 Debian GNU/Linux 11 \n \l
 ```
 
 > lscpu
+
 ```
 Architecture:                    x86_64
 CPU op-mode(s):                  32-bit, 64-bit
@@ -1485,6 +1489,7 @@ Flags:                           fpu vme de pse tsc msr pae mce cx8 apic sep mtr
 ```
 
 > ps aux | grep root
+
 ```
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root         1  0.0  0.2 165256  9988 ?        Ss   Jan09   0:04 /sbin/init
